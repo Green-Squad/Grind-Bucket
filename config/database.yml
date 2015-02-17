@@ -17,6 +17,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: localhost
+  username: <%= ENV['LEVEL_CAP_DATABASE_USERNAME'] %>
+  password: <%= ENV['LEVEL_CAP_DATABASE_PASSWORD'] %>
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 5
@@ -82,4 +85,3 @@ production:
   <<: *default
   database: level_cap_production
   username: level_cap
-  password: <%= ENV['LEVEL_CAP_DATABASE_PASSWORD'] %>
