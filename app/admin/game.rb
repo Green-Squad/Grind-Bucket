@@ -1,4 +1,5 @@
 ActiveAdmin.register Game do
+  permit_params :name, :color, :image
 
 
   # See permitted parameters documentation:
