@@ -17,8 +17,15 @@ gem 'validates_formatting_of'
 
 group :development, :test do
   gem 'dotenv-rails'
+  gem 'factory_girl_rails'
+  gem 'rspec-rails'
+end
+
+group :test do 
+  gem 'faker'
 end
 
 group :production do
   gem 'dotenv-deployment'
 end
+
