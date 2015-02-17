@@ -232,6 +232,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   jbuilder
+  kaminari
   pg
   rails (~> 4.2.0)
   rspec-rails

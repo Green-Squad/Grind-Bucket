@@ -13,11 +13,14 @@ describe "GET #index" do
       expect(response).to render_template("index")
     end
 
-    it "loads all of the posts into @games" do
-      game1, game2 = Game.create!, Game.create!
+    it "loads the first 50 games into @games" do
+      games_array = []
+      51.times do
+        games_array << Game.create!
+      end
       get :index
-
-      expect(assigns(:games)).to match_array([game1, game2])
+      
+      expect(assigns(:games).count).to be <=  50
     end
   end
 end
