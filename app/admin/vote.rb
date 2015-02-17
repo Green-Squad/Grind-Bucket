@@ -1,4 +1,5 @@
 ActiveAdmin.register Vote do
+  permit_params :vote
 
 
   # See permitted parameters documentation:
