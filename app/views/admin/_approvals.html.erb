@@ -1,0 +1,30 @@
+<%
+pending_games = Game.where(status: "Pending").order(:created_at).page params[:page]
+%>
+
+<h1>Games</h1>
+<table class="table approval-table">
+  <tr>
+    <th> ID </th>
+    <th> Name </th>
+    <th> Color </th>
+    <th> Image </th>
+    <th> Status </th>
+    <th> Actions </th>
+  </tr>
+  <% pending_games.each do |game| %>
+  <tr>
+    <td> <%= game.id %> </td>
+    <td> <%= game.name %> </td>
+    <td> <%= game.color %> </td>
+    <td> <%= game.image %> </td>
+    <td> <%= game.status %> </td>
+
+    <td><%= link_to "Approve", approve_game_path(id: game.id) %> <%= link_to "Reject", reject_game_path(id: game.id) %> </td>
+  </tr>
+  <% end %>
+</table>
+
+<div>
+  <%= paginate pending_games %>
+</div>

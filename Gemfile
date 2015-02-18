@@ -19,11 +19,11 @@ gem 'whenever'
 
 group :development, :test do
   gem 'dotenv-rails'
-  gem 'factory_girl_rails'
   gem 'rspec-rails'
 end
 
 group :test do 
+  gem 'factory_girl_rails'
   gem 'faker'
 end
 

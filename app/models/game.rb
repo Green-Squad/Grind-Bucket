@@ -2,6 +2,16 @@ class Game < ActiveRecord::Base
   require 'open-uri'
   paginates_per 50
   
+  def approve 
+    self.status = 'Approved'
+    save
+  end
+  
+  def reject
+    self.status = 'Rejected'
+    save
+  end
+  
   def self.getJSON
     game_platforms = [ "ps4", "xboxone", "ps3", "xbox360", "pc", "wii-u" ]
     
