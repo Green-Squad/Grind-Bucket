@@ -15,6 +15,7 @@ gem 'turbolinks'
 gem 'tzinfo-data'
 gem 'uglifier'
 gem 'validates_formatting_of'
+gem 'whenever'
 
 group :development, :test do
   gem 'dotenv-rails'
