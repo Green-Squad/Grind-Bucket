@@ -1,7 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+
+rank_types = ['Prestige', 'Level', 'Total Points', 'Rank', 'Extra Levels']
+
+rank_types.each do |rank_type|
+  RankType.create(name: rank_type)
+end
