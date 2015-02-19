@@ -1,12 +1,17 @@
 class GamesController < ApplicationController
   before_action :authenticate_admin_user!, only: [:approve, :reject]
-  #before_action :set_game
+  before_action :set_game, only: :show
   before_action :validate_recaptcha, only: :create
 
   def index
     @games = Game.where(status: "Approved").order(:name).page params[:page]
   end
 
+  
+  def show
+    
+  end
+  
   def create
     @game = Game.new(game_params)
     if @game.save
