@@ -9,7 +9,7 @@ class GamesController < ApplicationController
 
   
   def show
-    
+    @max_ranks = MaxRank.where(game_id: @game.id)
   end
   
   def create

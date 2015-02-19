@@ -36,9 +36,42 @@ describe GamesController, type: :controller do
         Game.create(name: Faker::Name.name, status: 'Rejected')
       end
       get :index
-      expect(assigns(:games).count).to eq(10)
+      expect(assigns(:games).count).to eq(Game.where(status: 'Approved').count)
     end
   end
+  
+  describe 'GET #show' do
+    
+    before(:each) do
+      @game = FactoryGirl.create(:game)
+    end
+    
+    it 'responds successfully with an HTTP 200 status code' do
+      get :show, id: @game.id
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+    
+    it 'renders the show template' do
+      get :show, id: @game.id
+      expect(response).to render_template('show')
+    end
+    
+    it 'has all of its max ranks' do
+      10.times do 
+        FactoryGirl.create(:max_rank, game_id: @game.id)
+      end
+      
+      10.times do 
+        FactoryGirl.create(:max_rank)
+      end
+      
+      get :show, id: @game.id
+      expect(assigns(:max_ranks).count).to eq(MaxRank.where(game_id: @game.id).count)
+    end
+    
+  end
+  
     
   describe 'POST #create' do
     context 'successful game creation' do

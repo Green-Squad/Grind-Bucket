@@ -1,1 +1,16 @@
 <%= render partial: 'max_rank/form' %>
+
+<% @max_ranks.each do |max_rank| %>
+  <p>
+  
+    <div>
+      Rank Type: <%= max_rank.rank_type.name %>
+    </div>
+    <div>
+      Value: <%= max_rank.value %>
+    </div>
+    <div>
+      Source: <%= max_rank.source %>
+    </div>
+  </p>
+<% end %>
