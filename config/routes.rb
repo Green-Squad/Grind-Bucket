@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}
   
+  root 'games#index'
+  
   get   'games',              to: 'games#index',      as: 'games_index'
   get   ':id',                to: 'games#show',       as: 'game'
   post  'games/new',          to: 'games#create',     as: 'new_game'

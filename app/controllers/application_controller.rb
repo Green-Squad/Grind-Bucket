@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
     json_response = JSON.load(open("#{url}?secret=#{secret}&response=#{response}"))
     unless json_response['success']
       flash[:error] = 'Could not verify that you are human. Please try again.'
-      redirect_to session[:previous_url] || games_index_url 
+      redirect_to :back || root_url 
     end
   end
 

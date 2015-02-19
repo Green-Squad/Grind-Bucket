@@ -1,11 +1,11 @@
 <% @max_rank = MaxRank.new %>
 <%= form_for(@max_rank, url: new_max_rank_path) do |f| %>
   <% if @game %>
-    <%= f.hidden_field :game, value: @game %>
+    <%= f.hidden_field :game_id, value: @game.id %>
   <% else %>
-    <%= f.select :game, Game.select_list, {}, { class: 'select2' } %>
+    <%= f.select :game_id, Game.select_list, {}, { class: 'select2' } %>
   <% end %>
-  <%= f.select :rank_type, RankType.select_list %>
+  <%= f.select :rank_type_id, RankType.select_list %>
   <%= f.label :value, 'Value:' %>
   <%= f.text_field :value %>
    <%= f.label :source, 'Source:' %>
