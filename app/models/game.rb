@@ -39,4 +39,13 @@ class Game < ActiveRecord::Base
     end
     games_added
   end
+  
+  def self.select_list
+    select_list_array = []
+    Game.where(status: "Approved").order(:name).each do |item|
+      select_list_array << [item.name, item.id]
+    end
+    select_list_array
+  end
+  
 end
