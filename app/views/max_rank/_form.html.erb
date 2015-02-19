@@ -8,6 +8,8 @@
   <%= f.select :rank_type, RankType.select_list %>
   <%= f.label :value, 'Value:' %>
   <%= f.text_field :value %>
+   <%= f.label :source, 'Source:' %>
+  <%= f.text_field :source %>
   <div class="g-recaptcha" data-sitekey="6LejWAETAAAAAJiT5Y2l1h9NLIRmwLjMd2ThoJzt"></div>
   <%= f.submit 'Submit' %>
 <% end %>

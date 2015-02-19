@@ -79,13 +79,13 @@ describe Game, type: :model do
     
     context "Successful creation" do
       it "with a name" do
-        Game.create(name: Faker::Name.name)
+        expect{Game.create(name: Faker::Name.name)}.to change{Game.count}.by(1)
       end
     end
     
     context "Unsuccessful creation" do
       it "without a name" do
-        Game.create(name: '')
+        expect{Game.create(name: '')}.to_not change{Game.count}
       end
     end
   end
