@@ -1,5 +1,5 @@
 ActiveAdmin.register_page "Approve Games" do
-  content title: proc{ I18n.t("active_admin.approve_games") } do
+  content title: proc{ 'Approve Games' } do
   #div class: "blank_slate_container", id: "dashboard_default_message" do
   #  span class: "blank_slate" do
   #    span I18n.t("active_admin.dashboard_welcome.welcome")
