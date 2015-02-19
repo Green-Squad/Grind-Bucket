@@ -1,0 +1,7 @@
+<% @game = Game.new %>
+<%= form_for(@game, url: {action: "create"}) do |f| %>
+  <%= f.label :name, 'Game Name:' %>
+  <%= f.text_field :name %>
+  <div class="g-recaptcha" data-sitekey="6LejWAETAAAAAJiT5Y2l1h9NLIRmwLjMd2ThoJzt"></div>
+  <%= f.submit 'Submit' %>
+<% end %>

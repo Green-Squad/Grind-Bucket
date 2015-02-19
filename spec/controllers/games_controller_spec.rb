@@ -27,16 +27,57 @@ describe GamesController, type: :controller do
     it "should only display approved games" do
       Game.delete_all
       10.times do
-        Game.create(status: "Pending")
+        Game.create(name: Faker::Name.name, status: "Pending")
       end
       10.times do
-        Game.create(status: "Approved")
+        Game.create(name: Faker::Name.name, status: "Approved")
       end
       10.times do
-        Game.create(status: "Rejected")
+        Game.create(name: Faker::Name.name, status: "Rejected")
       end
       get :index
       expect(assigns(:games).count).to eq(10)
+    end
+  end
+  
+  describe "POST #create" do
+    context "successful game creation" do
+      
+      subject { post :create, game: { name: 'Game Name' } }
+      
+      it "should create a game" do
+        allow(controller).to receive(:validate_recaptcha)
+        expect{ post :create, game: { name: 'Game Name' } }.to change{Game.count}.by(1)
+      end
+      
+      it "should redirect back" do
+        allow(controller).to receive(:validate_recaptcha)
+        expect(subject).to redirect_to(games_index_url)
+      end
+      
+      it "should flash success" do
+        allow(controller).to receive(:validate_recaptcha)
+        subject
+        expect(flash[:success]).to be_present
+      end
+    end
+    context "unsuccessful game creation" do
+      
+      subject { post :create, game: { name: '' } }
+      
+      it "should not create a blank game" do
+        allow(controller).to receive(:validate_recaptcha)
+        expect{ post :create, game: { name: '' } }.to_not change{Game.count}
+      end
+      it "should redirect back" do
+        allow(controller).to receive(:validate_recaptcha)
+        expect(subject).to redirect_to(games_index_url)
+      end
+      it "should flash error" do
+        allow(controller).to receive(:validate_recaptcha)
+        subject
+        expect(flash[:error]).to be_present
+      end
     end
   end
   

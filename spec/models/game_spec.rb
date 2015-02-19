@@ -5,12 +5,12 @@ describe Game, type: :model do
 
   describe ".getJSON" do
 
-    it "is a hash" do
+    xit "is a hash" do
       games = Game.getJSON
       expect(games).to be_instance_of(Hash)
     end
 
-    it "returns the right hash" do
+    xit "returns the right hash" do
       games = Game.getJSON
       game_platforms = [ "ps4", "xboxone", "ps3", "xbox360", "pc", "wii-u" ]
       headers =  {"X-Mashape-Key" => ENV["X_MASHAPE_KEY"]}
@@ -25,22 +25,19 @@ describe Game, type: :model do
 
   describe ".import" do
 
-    it "should be the same count as games added" do
-      Game.delete_all
+    xit "should be the same count as games added" do
       games_count = Game.count
       imported_games = Game.import
       expect(imported_games.count).to eq(Game.count - games_count)
     end
 
-    it "should add at least one game" do
-      Game.delete_all
+    xit "should add at least one game" do
       games_count = Game.count
       imported_games = Game.import
       expect(imported_games.count).to be > 0
     end
 
-    it "should be saved and set to pending" do
-      Game.delete_all
+    xit "should be saved and set to pending" do
       games_count = Game.count
       imported_games = Game.import
       imported_games.each do |game|
@@ -75,6 +72,21 @@ describe Game, type: :model do
       game = FactoryGirl.create(:game)
       game.reject
       expect(game.status).to eq('Rejected')
+    end
+  end
+  
+  describe ".create" do
+    
+    context "Successful creation" do
+      it "with a name" do
+        Game.create(name: Faker::Name.name)
+      end
+    end
+    
+    context "Unsuccessful creation" do
+      it "without a name" do
+        Game.create(name: '')
+      end
     end
   end
 

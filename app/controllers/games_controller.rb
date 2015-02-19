@@ -1,10 +1,22 @@
 class GamesController < ApplicationController
   before_action :authenticate_admin_user!, only: [:approve, :reject]
-  
+  #before_action :set_game
+  before_action :validate_recaptcha, only: :create
+
   def index
     @games = Game.where(status: "Approved").order(:name).page params[:page]
   end
-  
+
+  def create
+    @game = Game.new(game_params)
+    if @game.save
+      flash[:success] = "Successfully created #{@game.name}."
+    else
+      flash[:error] = 'Error creating a game'
+    end
+    redirect_to session[:previous_url] || games_index_url
+  end
+
   def approve
     game = Game.find_by_id(params[:id])
     if game
@@ -15,7 +27,7 @@ class GamesController < ApplicationController
     end
     redirect_to admin_approve_games_url
   end
-  
+
   def reject
     game = Game.find_by_id(params[:id])
     if game
@@ -25,5 +37,16 @@ class GamesController < ApplicationController
       flash[:error] = "Could not find a game with id #{params[:id]}."
     end
     redirect_to admin_approve_games_url
+  end
+
+  private
+
+  def set_game
+    @game = Game.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def game_params
+    params.require(:game).permit(:name)
   end
 end

@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20150217182732) do
     t.string   "name"
     t.string   "color"
     t.string   "image"
-    t.string   "status"
+    t.string   "status",     default: "Pending"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
