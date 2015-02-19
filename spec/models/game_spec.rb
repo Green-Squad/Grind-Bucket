@@ -3,18 +3,18 @@ require 'open-uri'
 
 describe Game, type: :model do
 
-  describe ".getJSON" do
+  describe '.getJSON' do
 
-    xit "is a hash" do
+    xit 'is a hash' do
       games = Game.getJSON
       expect(games).to be_instance_of(Hash)
     end
 
-    xit "returns the right hash" do
+    xit 'returns the right hash' do
       games = Game.getJSON
-      game_platforms = [ "ps4", "xboxone", "ps3", "xbox360", "pc", "wii-u" ]
-      headers =  {"X-Mashape-Key" => ENV["X_MASHAPE_KEY"]}
-      base_url = "https://byroredux-metacritic.p.mashape.com/"
+      game_platforms = [ 'ps4', 'xboxone', 'ps3', 'xbox360', 'pc', 'wii-u' ]
+      headers =  {'X-Mashape-Key' => ENV['X_MASHAPE_KEY']}
+      base_url = 'https://byroredux-metacritic.p.mashape.com/'
       games_hash = {}
       game_platforms.each do |platform|
         games_hash["#{platform}"] = JSON.load(open("#{base_url}game-list/#{platform}/new-releases", headers))
@@ -23,32 +23,32 @@ describe Game, type: :model do
     end
   end
 
-  describe ".import" do
+  describe '.import' do
 
-    xit "should be the same count as games added" do
+    xit 'should be the same count as games added' do
       games_count = Game.count
       imported_games = Game.import
       expect(imported_games.count).to eq(Game.count - games_count)
     end
 
-    xit "should add at least one game" do
+    xit 'should add at least one game' do
       games_count = Game.count
       imported_games = Game.import
       expect(imported_games.count).to be > 0
     end
 
-    xit "should be saved and set to pending" do
+    xit 'should be saved and set to pending' do
       games_count = Game.count
       imported_games = Game.import
       imported_games.each do |game|
-        expect(game.status).to eq("Pending")
+        expect(game.status).to eq('Pending')
         expect(game).to eq(Game.find(game.id))
         expect(game).to be_instance_of(Game)
       end
     end
   end
 
-  describe "#approve" do
+  describe '#approve' do
 
     it 'Should be pending' do
       game = FactoryGirl.create(:game)
@@ -62,7 +62,7 @@ describe Game, type: :model do
     end
   end
 
-  describe "#reject" do
+  describe '#reject' do
     it 'Should be pending' do
       game = FactoryGirl.create(:game)
       expect(game.status).to eq('Pending')
@@ -75,39 +75,39 @@ describe Game, type: :model do
     end
   end
   
-  describe ".create" do
+  describe '.create' do
     
-    context "Successful creation" do
-      it "with a name" do
+    context 'Successful creation' do
+      it 'with a name' do
         expect{Game.create(name: Faker::Name.name)}.to change{Game.count}.by(1)
       end
     end
     
-    context "Unsuccessful creation" do
-      it "without a name" do
+    context 'Unsuccessful creation' do
+      it 'without a name' do
         expect{Game.create(name: '')}.to_not change{Game.count}
       end
     end
   end
   
-  describe ".select_list" do
+  describe '.select_list' do
     before(:each) do
       5.times do 
         FactoryGirl.create(:game)
       end
       5.times do
-        FactoryGirl.create(:game, status: "Approved")
+        FactoryGirl.create(:game, status: 'Approved')
       end
     end
-    it "returns array" do
+    it 'returns array' do
       expect(Game.select_list).to be_instance_of(Array)
     end
     
-    it "has the same count as approved games count" do
-      expect(Game.select_list.count).to eq(Game.where(status: "Approved").count)
+    it 'has the same count as approved games count' do
+      expect(Game.select_list.count).to eq(Game.where(status: 'Approved').count)
     end
     
-    it "has the correct id for each name" do
+    it 'has the correct id for each name' do
       select_list = Game.select_list
       select_list.each do |name, id|
         game = Game.find(id)
@@ -115,29 +115,29 @@ describe Game, type: :model do
       end
     end
     
-    it "includes every approved game" do
+    it 'includes every approved game' do
       select_list = Game.select_list
-      Game.where(status: "Approved").each do |game|
+      Game.where(status: 'Approved').each do |game|
         array = [game.name, game.id]
         expect(select_list).to include(array)
       end
     end
     
-    it "is greater than 0" do
+    it 'is greater than 0' do
       expect(Game.select_list.count).to be > 0
     end
     
-    it "is sorted" do
+    it 'is sorted' do
       select_list = Game.select_list.sort do |a, b|
         a[0] <=> b[0]
       end
       expect(Game.select_list).to eq(select_list)
     end
     
-    it "has only approved games" do
+    it 'has only approved games' do
       Game.select_list.each do |name, id|
         game = Game.find(id)
-        expect(game.status).to eq("Approved")
+        expect(game.status).to eq('Approved')
       end
     end
   end
