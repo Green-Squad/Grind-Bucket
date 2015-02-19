@@ -17,9 +17,9 @@ class GamesController < ApplicationController
     if @game.save
       flash[:success] = "Successfully created #{@game.name}."
     else
-      flash[:error] = 'Error creating a game'
+      flash[:error] = 'Error creating a game.'
     end
-    redirect_to session[:previous_url] || games_index_url
+    redirect_to session[:previous_url] || root_url
   end
 
   def approve

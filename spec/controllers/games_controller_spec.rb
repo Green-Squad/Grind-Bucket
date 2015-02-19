@@ -52,7 +52,7 @@ describe GamesController, type: :controller do
       
       it "should redirect back" do
         allow(controller).to receive(:validate_recaptcha)
-        expect(subject).to redirect_to(games_index_url)
+        expect(subject).to redirect_to(root_url)
       end
       
       it "should flash success" do
@@ -71,7 +71,7 @@ describe GamesController, type: :controller do
       end
       it "should redirect back" do
         allow(controller).to receive(:validate_recaptcha)
-        expect(subject).to redirect_to(games_index_url)
+        expect(subject).to redirect_to(root_url)
       end
       it "should flash error" do
         allow(controller).to receive(:validate_recaptcha)
