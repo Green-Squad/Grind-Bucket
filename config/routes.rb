@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get   'search',             to: 'search#search',              as: 'search'
   get   'search-items',       to: 'search#autocomplete',        as: 'search_autocomplete'
+  
+  get   'loading',            to: 'home#loading',              as: 'loading'
 
   get   'games',              to: 'games#index',                as: 'games_index'
   get   ':id',                to: 'games#show',                 as: 'game'
