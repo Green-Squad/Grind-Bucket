@@ -1,5 +1,5 @@
 $(function() {
-
+  
   $.ui.autocomplete.prototype._renderItem = function(ul, item) {
     var re = new RegExp(this.term, "ig");
     var t = item.label.replace(re, "<strong>$&</strong>");
