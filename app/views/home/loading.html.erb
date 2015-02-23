@@ -1,4 +1,5 @@
 <h1>Loading</h1>
+<%= link_to 'Click here if it gets stuck.', session[:intended_url] || root_url %>
 <script>
-	window.location.href ='<%= session[:previous_url] || root_url %>';
+	window.location.href ='<%= session[:intended_url]|| root_url %>';
 </script>

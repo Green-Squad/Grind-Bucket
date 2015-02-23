@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
     ip_address = request.remote_ip
     fingerprint = cookies[:fingerprint] 
     
+    
     if fingerprint
       # Most recent identifier record that matches given IP Address and Fingerprint
       identifier = Identifier.where(ip_address: ip_address, fingerprint: fingerprint).order(created_at: :desc).first
@@ -24,6 +25,7 @@ class ApplicationController < ActionController::Base
         sign_in(user)     
       end
     else
+      session[:intended_url] =  request.original_url
       redirect_to loading_url  
     end
   end
