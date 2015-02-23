@@ -55,15 +55,19 @@ describe SearchController, type: :controller do
       expect(response).to render_template('search/search')
     end
     
-    it 'has search query in response' do
-      query = 'Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL'
-      get :search, query: query
-      expect(response.body).to match(/Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL/)
-    end
-    
     it 'redirects to home page if no query' do
       get :search
       expect(response).to redirect_to(root_url)
+    end
+    
+    context 'render views' do
+      render_views
+      
+      it 'has search query in response' do
+        query = 'Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL'
+        get :search, query: query
+        expect(response.body).to match(/Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL/)
+      end
     end
     
   end

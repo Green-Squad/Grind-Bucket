@@ -1,0 +1,22 @@
+<h1 class="page-name page-header">
+  <span style="display:table-cell;vertical-align: middle;width:100%;">
+    Search Results for '<%= @google_request["queries"]["request"][0]["searchTerms"] %>'
+  </span>
+  <% if(@total_results > 0) %>
+    <span class="small" style="display:table-cell;vertical-align: bottom;padding-left:15px;white-space: nowrap">
+      <small class="pull-right">Top <%= @google_request["items"].size %> results</small>
+    </span>
+  <% end %>
+</h1>
+
+<% if(@total_results > 0) %>
+  <% @google_request["items"].each do |item| %>
+    <div style="margin-bottom: 20px">
+      <h4 class="no-margin"><%= link_to item["title"], item["link"] %></h4>
+      <p class="no-margin search-url"><%= item["link"] %></p>
+      <p class="no-margin"><%= item["snippet"] %></p>    
+    </div>
+  <% end %>
+<% else %>
+    <h3>There are no search results.</h3>
+<% end %>
