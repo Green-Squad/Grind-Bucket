@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20150217182732) do
   end
 
   create_table "identifiers", force: :cascade do |t|
-    t.integer  "fingerprint"
+    t.string   "fingerprint"
     t.string   "ip_address"
     t.integer  "user_id"
     t.datetime "created_at"
