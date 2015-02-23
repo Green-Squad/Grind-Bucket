@@ -10,6 +10,7 @@ gem 'jquery-turbolinks'
 gem 'kaminari'          
 gem 'pg'
 gem 'rails',                    '~> 4.2.0'
+gem "random_username"
 gem 'sass'
 gem 'sass-rails'
 gem 'turbolinks'
@@ -31,4 +32,3 @@ end
 group :production do
   gem 'dotenv-deployment'
 end
-
