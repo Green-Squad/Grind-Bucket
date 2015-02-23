@@ -2,7 +2,73 @@ require 'rails_helper'
 
 describe SearchController, type: :controller do
 
-  describe 'GET #autocomplete' do
+  describe 'GET #search' do
+    
+    before(:each) do
+      Game.delete_all
+      100.times do
+        FactoryGirl.create(:game, status: 'Approved')
+      end
+      100.times do
+        FactoryGirl.create(:game)
+      end
+    end
+    
+    it 'redirects to game page' do
+      game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
+      get :search, query: 'Halo 4'
+      expect(response).to redirect_to(game_url(game.id))
+    end
+    
+    it 'redirects to game page with whitespaces' do
+      game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
+      get :search, query: 'H a l o   4    ' 
+      expect(response).to redirect_to(game_url(game.id))
+    end
+    
+    it 'redirects to game page with no whitespace' do
+      game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
+      get :search, query: 'Halo4'
+      expect(response).to redirect_to(game_url(game.id))
+    end
+    
+    it 'redirects to game page with incomplete title' do
+      game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
+      get :search, query: 'Halo'
+      expect(response).to redirect_to(game_url(game.id))
+    end
+    
+    it 'redirects to game page with different case' do
+      game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
+      get :search, query: 'hALO 4'
+      expect(response).to redirect_to(game_url(game.id))
+    end
+    
+    it 'does not redirect to game page if it is pending' do
+      game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Pending')
+       get :search, query: 'Halo 4'
+      expect(response).to_not redirect_to(game_url(game.id))
+    end
+    
+    it 'redirects to search results page if no match is found' do
+      get :search, query: 'Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL'
+      expect(response).to render_template('search/search')
+    end
+    
+    it 'has search query in response' do
+      query = 'Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL'
+      get :search, query: query
+      expect(response.body).to match(/Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL/)
+    end
+    
+    it 'redirects to home page if no query' do
+      get :search
+      expect(response).to redirect_to(root_url)
+    end
+    
+  end
+  
+  describe 'POST #autocomplete' do
 
     it 'returns a JSON' do
       post :autocomplete, query: 'a', format: :json
