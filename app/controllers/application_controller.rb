@@ -3,30 +3,30 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :validate_user, except: :loading
+  before_action :validate_user
 
   private
   
   def validate_user
-    ip_address = request.remote_ip
-    fingerprint = cookies[:fingerprint] 
-    
-    
-    if fingerprint
-      # Most recent identifier record that matches given IP Address and Fingerprint
-      identifier = Identifier.where(ip_address: ip_address, fingerprint: fingerprint).order(created_at: :desc).first
-      if identifier
-        sign_in(User.find(identifier.user_id))
-      elsif current_user  
-        Identifier.where(ip_address: ip_address, fingerprint: fingerprint, user_id: current_user.id).first_or_create
+    unless params[:cookies] && params[:cookies] == 'false'
+      ip_address = request.remote_ip
+      fingerprint = session[:fingerprint]
+      if fingerprint
+        # Most recent identifier record that matches given IP Address and Fingerprint
+        identifier = Identifier.where(ip_address: ip_address, fingerprint: fingerprint).order(created_at: :desc).first
+        if identifier
+          sign_in(User.find(identifier.user_id))
+        elsif current_user  
+          Identifier.where(ip_address: ip_address, fingerprint: fingerprint, user_id: current_user.id).first_or_create
+        else
+          user = User.create!
+          Identifier.create(ip_address: ip_address, fingerprint: fingerprint, user_id: user.id)
+          sign_in(user)     
+        end
       else
-        user = User.create!
-        Identifier.create(ip_address: ip_address, fingerprint: fingerprint, user_id: user.id)
-        sign_in(user)     
+        session[:intended_url] = request.original_url
+        redirect_to loading_url  
       end
-    else
-      session[:intended_url] =  request.original_url
-      redirect_to loading_url  
     end
   end
   

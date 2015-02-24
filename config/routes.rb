@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get   'search',             to: 'search#search',              as: 'search'
   get   'search-items',       to: 'search#autocomplete',        as: 'search_autocomplete'
   
-  get   'loading',            to: 'home#loading',              as: 'loading'
+  get   'loading',            to: 'home#loading',               as: 'loading'
 
   get   'games',              to: 'games#index',                as: 'games_index'
   get   ':id',                to: 'games#show',                 as: 'game'
@@ -18,5 +18,7 @@ Rails.application.routes.draw do
   get   'games/reject/:id',   to: 'games#reject',               as: 'reject_game'
 
   post  'max_ranks/new',      to: 'max_ranks#create',           as: 'new_max_rank'
+  
+  post  'fingerprint/new',    to: 'fingerprint#create',         as: 'new_fingerprint'
 
 end
