@@ -1,9 +1,2 @@
 <h1>Loading</h1>
-<%= link_to 'Click here if it gets stuck.', session[:intended_url] || root_url, id: 'clickable' %>
-<script type="text/javascript">
-$(function() {
-  if (window.location.pathname == '/loading') { 
-    Turbolinks.visit('<%= session[:intended_url] %>');
-  }
-});
-</script>
+<%= link_to 'Click here if it gets stuck.', session[:intended_url] || root_url, id: 'redirect_url' %>
