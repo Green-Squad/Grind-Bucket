@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20150217182732) do
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string   "remember_token"
     t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -104,6 +105,7 @@ ActiveRecord::Schema.define(version: 20150217182732) do
     t.datetime "updated_at",                          null: false
   end
 
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 

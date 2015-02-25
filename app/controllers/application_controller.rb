@@ -15,19 +15,34 @@ class ApplicationController < ActionController::Base
         # Most recent identifier record that matches given IP Address and Fingerprint
         identifier = Identifier.where(ip_address: ip_address, fingerprint: fingerprint).order(created_at: :desc).first
         if identifier
-          sign_in(User.find(identifier.user_id))
-        elsif current_user  
+          user = User.find(identifier.user_id)
+          unless user == current_user
+            login_and_remember(user)
+          end
+        elsif current_user
           Identifier.where(ip_address: ip_address, fingerprint: fingerprint, user_id: current_user.id).first_or_create
         else
           user = User.create!
           Identifier.create(ip_address: ip_address, fingerprint: fingerprint, user_id: user.id)
-          sign_in(user)     
+          login_and_remember(user)
         end
       else
         session[:intended_url] = request.original_url
         redirect_to loading_url  
       end
     end
+  end
+  
+  def login_and_remember(user)
+    sign_in(user)
+    user.remember_me!
+    
+    user_cookie = User.serialize_into_cookie(user)
+    cookies.signed[:remember_user_token] = { 
+      value: user_cookie, 
+      expires: 2.weeks.from_now,
+      httponly: true
+    }
   end
   
   #-> Prelang (user_login:devise)
