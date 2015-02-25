@@ -54,6 +54,11 @@ RSpec.describe MaxRanksController, type: :controller do
         subject
         expect(flash[:error]).to be_present
       end
+      it 'should not create a max rank without a user' do
+        allow(controller).to receive(:validate_recaptcha)
+        User.delete_all
+        expect{ post :create, { max_rank: { rank_type_id: FactoryGirl.create(:rank_type).id, value: Faker::Number.number(10), source: Faker::Internet.url, game_id: FactoryGirl.create(:game).id }, cookies: 'false' }, { fingerprint: '123456' } }.to_not change{MaxRank.count}
+      end
     end
   end
 end

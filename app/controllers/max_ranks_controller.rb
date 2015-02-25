@@ -1,6 +1,7 @@
 class MaxRanksController < ApplicationController
   before_action :validate_recaptcha, only: :create
   def create
+    params[:max_rank][:user_id] = current_user ? current_user.id : nil
     @max_rank = MaxRank.new(max_rank_params)
     if @max_rank.save
       flash[:success] = "Successfully created #{@max_rank.rank_type.name} for #{@max_rank.game.name}."
@@ -14,6 +15,6 @@ class MaxRanksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def max_rank_params
-    params.require(:max_rank).permit(:rank_type_id, :value, :source, :game_id)
+    params.require(:max_rank).permit(:rank_type_id, :value, :source, :game_id, :user_id)
   end
 end

@@ -4,4 +4,5 @@ class MaxRank < ActiveRecord::Base
   belongs_to :user
   
   validates :source, presence: true
+  validates :user, presence: true
 end
