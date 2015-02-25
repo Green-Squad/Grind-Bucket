@@ -16,6 +16,12 @@ describe FingerprintController, type: :controller do
       expect(response['Content-Type']).to include('application/json')
     end
     
+    it 'should return success' do
+      fingerprint = '123456'
+      post :create, fingerprint: fingerprint, format: :json
+      expect(response).to have_http_status(:success)
+    end
+    
     it 'should throw error if no fingerprint' do
       post :create, fingerprint: '', format: :json
       expect(response).to have_http_status(:unprocessable_entity)

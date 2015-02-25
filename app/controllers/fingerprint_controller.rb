@@ -2,14 +2,14 @@ class FingerprintController < ApplicationController
   skip_before_action :validate_user
   skip_before_action :verify_authenticity_token
   def create
-    if params[:fingerprint] && !params[:fingerprint].blank?
+    if params[:fingerprint] && params[:fingerprint].present?
       fingerprint = params[:fingerprint]
       session[:fingerprint] = fingerprint
       json = { fingerprint: fingerprint }
-      status = :success
+      status = 200
     else
       json = {}
-      status = :unprocessable_entity
+      status = 422
     end
 
     respond_to do |format|
