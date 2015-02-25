@@ -16,47 +16,47 @@ describe SearchController, type: :controller do
     
     it 'redirects to game page' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
-      get :search, query: 'Halo 4'
+      get :search, { query: 'Halo 4' }, { fingerprint: '123456' }
       expect(response).to redirect_to(game_url(game.id))
     end
     
     it 'redirects to game page with whitespaces' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
-      get :search, query: 'H a l o   4    ' 
+      get :search, { query: 'H a l o   4    ' }, { fingerprint: '123456' } 
       expect(response).to redirect_to(game_url(game.id))
     end
     
     it 'redirects to game page with no whitespace' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
-      get :search, query: 'Halo4'
+      get :search, { query: 'Halo4' }, { fingerprint: '123456' }
       expect(response).to redirect_to(game_url(game.id))
     end
     
     it 'redirects to game page with incomplete title' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
-      get :search, query: 'Halo'
+      get :search, { query: 'Halo' }, { fingerprint: '123456' }
       expect(response).to redirect_to(game_url(game.id))
     end
     
     it 'redirects to game page with different case' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
-      get :search, query: 'hALO 4'
+      get :search, { query: 'hALO 4' }, { fingerprint: '123456' }
       expect(response).to redirect_to(game_url(game.id))
     end
     
     it 'does not redirect to game page if it is pending' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Pending')
-       get :search, query: 'Halo 4'
+       get :search, { query: 'Halo 4' }, { fingerprint: '123456' }
       expect(response).to_not redirect_to(game_url(game.id))
     end
     
     it 'redirects to search results page if no match is found' do
-      get :search, query: 'Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL'
+      get :search, { query: 'Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL' }, { fingerprint: '123456' }
       expect(response).to render_template('search/search')
     end
     
     it 'redirects to home page if no query' do
-      get :search
+      get :search, nil, { fingerprint: '123456' }
       expect(response).to redirect_to(root_url)
     end
     
@@ -65,7 +65,7 @@ describe SearchController, type: :controller do
       
       it 'has search query in response' do
         query = 'Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL'
-        get :search, query: query
+        get :search, { query: query }, { fingerprint: '123456' }
         expect(response.body).to match(/Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL/)
       end
     end
@@ -75,7 +75,7 @@ describe SearchController, type: :controller do
   describe 'POST #autocomplete' do
 
     it 'returns a JSON' do
-      post :autocomplete, query: 'a', format: :json
+      post :autocomplete, { query: 'a', format: :json }, { fingerprint: '123456' }
       expect(response['Content-Type']).to include("application/json")
     end
 

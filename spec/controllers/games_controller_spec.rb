@@ -4,13 +4,13 @@ describe GamesController, type: :controller do
   
   describe 'GET #index' do
     it 'responds successfully with an HTTP 200 status code' do
-      get :index
+      get :index, nil, { fingerprint: '123456'}
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
     
     it 'renders the index template' do
-      get :index
+      get :index, nil, { fingerprint: '123456'}
       expect(response).to render_template('index')
     end
 
@@ -19,7 +19,7 @@ describe GamesController, type: :controller do
       51.times do
         games_array << Game.create(status: 'Approved')
       end
-      get :index
+      get :index, nil, { fingerprint: '123456'}
       
       expect(assigns(:games).count).to be <=  50
     end
@@ -35,7 +35,7 @@ describe GamesController, type: :controller do
       10.times do
         Game.create(name: Faker::Name.name, status: 'Rejected')
       end
-      get :index
+      get :index, nil, { fingerprint: '123456'}
       expect(assigns(:games).count).to eq(Game.where(status: 'Approved').count)
     end
   end
@@ -47,13 +47,13 @@ describe GamesController, type: :controller do
     end
     
     it 'responds successfully with an HTTP 200 status code' do
-      get :show, id: @game.id
+      get :show, { id: @game.id }, { fingerprint: '123456'}
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
     
     it 'renders the show template' do
-      get :show, id: @game.id
+      get :show, { id: @game.id }, { fingerprint: '123456'}
       expect(response).to render_template('show')
     end
     
@@ -66,7 +66,7 @@ describe GamesController, type: :controller do
         FactoryGirl.create(:max_rank)
       end
       
-      get :show, id: @game.id
+      get :show, { id: @game.id }, { fingerprint: '123456'}
       expect(assigns(:max_ranks).count).to eq(MaxRank.where(game_id: @game.id).count)
     end
     
@@ -76,11 +76,11 @@ describe GamesController, type: :controller do
   describe 'POST #create' do
     context 'successful game creation' do
       
-      subject { post :create, game: { name: 'Game Name' } }
+      subject { post :create, { game: { name: 'Game Name' } }, { fingerprint: '123456'} }
       
       it 'should create a game' do
         allow(controller).to receive(:validate_recaptcha)
-        expect{ post :create, game: { name: 'Game Name' } }.to change{Game.count}.by(1)
+        expect{ post :create, { game: { name: 'Game Name' } }, { fingerprint: '123456'} }.to change{Game.count}.by(1)
       end
       
       it 'should redirect back' do
@@ -96,7 +96,7 @@ describe GamesController, type: :controller do
     end
     context 'unsuccessful game creation' do
       
-      subject { post :create, game: { name: '' } }
+      subject { post :create, { game: { name: '' } }, { fingerprint: '123456'} }
       
       it 'should not create a blank game' do
         allow(controller).to receive(:validate_recaptcha)
@@ -115,7 +115,7 @@ describe GamesController, type: :controller do
   end
   
   describe 'GET #approve' do
-    subject { get :approve, id: 1 }
+    subject { get :approve, { id: 1 }, { fingerprint: '123456'} }
     
     context 'when admin logged in' do
       admin = FactoryGirl.create(:admin_user)
@@ -128,7 +128,7 @@ describe GamesController, type: :controller do
       it 'should flash success' do
         sign_in admin
         game = FactoryGirl.create(:game)
-        get :approve, id: game.id
+        get :approve, { id: game.id }, { fingerprint: '123456'}
         expect(flash[:success]).to be_present
       end
       
@@ -137,7 +137,7 @@ describe GamesController, type: :controller do
         game = FactoryGirl.create(:game)
         id = game.id
         game.destroy
-        get :approve, id: id
+        get :approve, { id: id }, { fingerprint: '123456'}
         expect(flash[:error]).to be_present
       end
     end
@@ -150,7 +150,7 @@ describe GamesController, type: :controller do
   end
   
   describe 'GET #reject' do
-    subject { get :reject, id: 1 }
+    subject { get :reject, { id: 1 }, { fingerprint: '123456'} }
         
     context 'when admin logged in' do
       
@@ -164,7 +164,7 @@ describe GamesController, type: :controller do
       it 'should flash success' do
         sign_in admin
         game = FactoryGirl.create(:game)
-        get :reject, id: game.id
+        get :reject, { id: game.id }, { fingerprint: '123456'}
         expect(flash[:success]).to be_present
       end
       
@@ -173,7 +173,7 @@ describe GamesController, type: :controller do
         game = FactoryGirl.create(:game)
         id = game.id
         game.destroy
-        get :reject, id: id
+        get :reject, { id: id }, { fingerprint: '123456'}
         expect(flash[:error]).to be_present
       end
     end

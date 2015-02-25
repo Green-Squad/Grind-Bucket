@@ -9,11 +9,21 @@ RSpec.describe MaxRanksController, type: :controller do
     
     context 'successful max rank creation' do
       
-      subject { post :create, max_rank: { rank_type_id: FactoryGirl.create(:rank_type).id, value: Faker::Number.number(10), source: Faker::Internet.url, game_id: FactoryGirl.create(:game).id  } }
+      subject { post :create, { 
+                max_rank: { 
+                  rank_type_id: FactoryGirl.create(:rank_type).id,
+                    value: Faker::Number.number(10), source: Faker::Internet.url,
+                    game_id: FactoryGirl.create(:game).id  
+                  } 
+                },
+                { 
+                  fingerprint: '123456' 
+                } 
+              }
       
       it 'should create a max rank' do
         allow(controller).to receive(:validate_recaptcha)
-        expect{ post :create, max_rank: { rank_type_id: FactoryGirl.create(:rank_type).id, value: Faker::Number.number(10), source: Faker::Internet.url, game_id: FactoryGirl.create(:game).id } }.to change{MaxRank.count}.by(1)
+        expect{ post :create,{ max_rank: { rank_type_id: FactoryGirl.create(:rank_type).id, value: Faker::Number.number(10), source: Faker::Internet.url, game_id: FactoryGirl.create(:game).id } }, { fingerprint: '123456' } }.to change{MaxRank.count}.by(1)
       end
       
       it 'should redirect back' do
@@ -29,11 +39,11 @@ RSpec.describe MaxRanksController, type: :controller do
     end
     context 'unsuccessful max rank creation' do
       
-      subject { post :create, max_rank: { rank_type_id: '', value: '', source: '', game_id: '' } }
+      subject { post :create, { max_rank: { rank_type_id: '', value: '', source: '', game_id: '' } }, { fingerprint: '123456' } }
       
       it 'should not create a blank max rank' do
         allow(controller).to receive(:validate_recaptcha)
-        expect{ post :create, max_rank: { rank_type_id: '', value: '', source: '', game_id: '' } }.to_not change{MaxRank.count}
+        expect{ post :create, { max_rank: { rank_type_id: '', value: '', source: '', game_id: '' } }, { fingerprint: '123456' } }.to_not change{MaxRank.count}
       end
       it 'should redirect back' do
         allow(controller).to receive(:validate_recaptcha)
