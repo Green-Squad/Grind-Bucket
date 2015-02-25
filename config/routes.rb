@@ -20,5 +20,7 @@ Rails.application.routes.draw do
   post  'max_ranks/new',      to: 'max_ranks#create',           as: 'new_max_rank'
   
   post  'fingerprint/new',    to: 'fingerprint#create',         as: 'new_fingerprint'
+  
+  post  'votes/new',          to: 'votes#create',               as: 'new_vote'
 
 end
