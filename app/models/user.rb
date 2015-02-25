@@ -2,8 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable#, :validatable
-         
+         :recoverable, :rememberable, :trackable
+
   before_create :create_username
 
   private
@@ -15,4 +15,3 @@ class User < ActiveRecord::Base
     create_username if User.where(username: username).count > 0
   end
 end
-
