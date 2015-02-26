@@ -53,5 +53,20 @@ describe VotesController, type: :controller do
         expect{post :create, { vote: { vote: '1', max_rank_id: '' }, format: :json }, { fingerprint: '123456' }}.to_not change{Vote.count}
       end
     end
+
+    context 'same user with multiple max rank votes' do
+      it 'deletes with all same attributes' do
+        max_rank = FactoryGirl.create(:max_rank)
+        post :create, { vote: { vote: '1', max_rank_id: max_rank.id }, format: :json }, { fingerprint: '123456'}
+        expect { post :create, { vote: { vote: '1', max_rank_id: max_rank.id }, format: :json }, { fingerprint: '123456'} }.to change{Vote.count}.by(-1)
+      end
+      it 'changes vote with different vote' do
+         max_rank = FactoryGirl.create(:max_rank)
+        post :create, { vote: { vote: '1', max_rank_id: max_rank.id }, format: :json }, { fingerprint: '123456'}
+        expect { post :create, { vote: { vote: '-1', max_rank_id: max_rank.id }, format: :json }, { fingerprint: '123456'} }.to_not change{Vote.count}
+        expect(Vote.last.vote).to eq(-1)
+      end
+
+    end
   end
 end
