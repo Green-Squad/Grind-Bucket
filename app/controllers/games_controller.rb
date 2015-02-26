@@ -17,6 +17,7 @@ class GamesController < ApplicationController
         downvotes: max_rank.downvotes
       }
     end
+    @max_ranks_array = MaxRank.sort(@max_ranks_array)
   end
   
   def create

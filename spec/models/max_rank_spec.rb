@@ -19,7 +19,8 @@ describe MaxRank, type: :model do
     it 'has the correct number of upvotes' do
       rank_type = FactoryGirl.create(:rank_type)
       user = FactoryGirl.create(:user)
-      max_rank = MaxRank.create(rank_type_id: rank_type.id, value: rand(1..100), user_id: user.id, game_id: 34, source: Faker::Internet.url)
+      game = FactoryGirl.create(:game)
+      max_rank = MaxRank.create(rank_type_id: rank_type.id, value: rand(1..100), user_id: user.id, game_id: game.id, source: Faker::Internet.url)
       10.times do 
         Vote.create(max_rank_id: max_rank.id, user_id: FactoryGirl.create(:user).id, vote: 1) 
       end
@@ -30,17 +31,57 @@ describe MaxRank, type: :model do
     it 'has 0 upvotes' do
       rank_type = FactoryGirl.create(:rank_type)
       user = FactoryGirl.create(:user)
-      max_rank = MaxRank.create(rank_type_id: rank_type.id, value: rand(1..100), user_id: user.id, game_id: 34, source: Faker::Internet.url)
+      game = FactoryGirl.create(:game)
+      max_rank = MaxRank.create(rank_type_id: rank_type.id, value: rand(1..100), user_id: user.id, game_id: game.id, source: Faker::Internet.url)
       expect(max_rank.upvotes).to eq(0)
     end
   end
   
   describe '#downvotes' do
     it 'has 0 downvotes' do
+      game = FactoryGirl.create(:game)
       rank_type = FactoryGirl.create(:rank_type)
       user = FactoryGirl.create(:user)
-      max_rank = MaxRank.create(rank_type_id: rank_type.id, value: rand(1..100), user_id: user.id, game_id: 34, source: Faker::Internet.url)
+      max_rank = MaxRank.create(rank_type_id: rank_type.id, value: rand(1..100), user_id: user.id, game_id: game.id, source: Faker::Internet.url)
       expect(max_rank.downvotes).to eq(0)
+    end
+  end
+  
+  describe '.sort' do
+    it 'returns the sorted array' do
+      Vote.delete_all
+      MaxRank.delete_all
+      rank_type = FactoryGirl.create(:rank_type)
+      user = FactoryGirl.create(:user)
+      game = FactoryGirl.create(:game)
+      10.times do
+        max_rank = MaxRank.create!(rank_type_id: rank_type.id, value: rand(1..100), user_id: user.id, game_id: game.id, source: Faker::Internet.url)
+        rand(1..10).times do 
+          Vote.create!(max_rank_id: max_rank.id, user_id: FactoryGirl.create(:user).id, vote: [-1, 1, -1].sample) 
+        end
+      end
+      
+      max_ranks = MaxRank.where(game_id: game.id)
+      max_ranks_array = max_ranks.map do |max_rank|
+        rank_info = {
+          max_rank: max_rank,
+          upvotes: max_rank.upvotes,
+          downvotes: max_rank.downvotes
+        }
+      end
+      max_ranks_array = MaxRank.sort(max_ranks_array)
+      
+      sorted_array = MaxRank.sort(max_ranks_array)
+      
+      sorted_array.each_with_index do |max_rank, i|
+        if sorted_array[i+1]
+          expect(max_rank[:upvotes] - max_rank[:downvotes]).to be >= (sorted_array[i+1][:upvotes] - sorted_array[i+1][:downvotes])
+          if max_rank[:upvotes] - max_rank[:downvotes] == sorted_array[i+1][:upvotes] - sorted_array[i+1][:downvotes]
+            expect(max_rank[:upvotes] + max_rank[:downvotes]).to be >= (sorted_array[i+1][:upvotes] + sorted_array[i+1][:downvotes])
+          end
+        end
+      end
+      
     end
   end
 end

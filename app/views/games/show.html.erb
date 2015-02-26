@@ -1,23 +1,26 @@
 <%= render partial: 'max_rank/form' %>
 
 <% @max_ranks_array.each do |max_rank| %>
-  <p>
-    <div>
-      Rank Type: <%= max_rank[:max_rank].rank_type.name %>
+<p>
+  <div>
+    Rank Type: <%= max_rank[:max_rank].rank_type.name %>
+  </div>
+  <div>
+    Value: <%= max_rank[:max_rank].value %>
+  </div>
+  <div>
+    Source: <%= max_rank[:max_rank].source %>
+  </div>
+  <div id="<%= max_rank[:max_rank].id %>">
+    <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+      upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
+    </div>
+    <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+      downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
     </div>
     <div>
-      Value: <%= max_rank[:max_rank].value %>
+      Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
     </div>
-    <div>
-      Source: <%= max_rank[:max_rank].source %>
-    </div>
-    <div id="<%= max_rank[:max_rank].id %>">
-      <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-        upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
-      </div>
-      <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-        downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
-      </div>
-    </div>
-  </p>
+  </div>
+</p>
 <% end %>
