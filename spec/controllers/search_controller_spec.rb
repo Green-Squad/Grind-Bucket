@@ -4,12 +4,12 @@ describe SearchController, type: :controller do
 
   describe 'GET #search' do
     
-    before(:each) do
+    before(:all) do
       Game.delete_all
-      100.times do
+      50.times do
         FactoryGirl.create(:game, status: 'Approved')
       end
-      100.times do
+      50.times do
         FactoryGirl.create(:game)
       end
     end
@@ -83,12 +83,12 @@ describe SearchController, type: :controller do
   
   describe '#search_array' do
     
-    before(:each) do
+    before(:all) do
       Game.delete_all
-      100.times do
+      50.times do
         FactoryGirl.create(:game, status: 'Approved')
       end
-      100.times do
+      50.times do
         FactoryGirl.create(:game)
       end
     end
