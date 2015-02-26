@@ -41,11 +41,10 @@ class Game < ActiveRecord::Base
   end
   
   def self.select_list
-    select_list_array = []
-    Game.where(status: "Approved").order(:name).each do |item|
-      select_list_array << [item.name, item.id]
+    approved_games = Game.where(status: "Approved").order(:name)
+    select_list_array = approved_games.map do |game|
+      [game.name, game.id]
     end
-    select_list_array
   end
   
 end
