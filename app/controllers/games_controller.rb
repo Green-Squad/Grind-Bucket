@@ -9,7 +9,14 @@ class GamesController < ApplicationController
 
   
   def show
-    @max_ranks = MaxRank.where(game_id: @game.id)
+    max_ranks = MaxRank.where(game_id: @game.id)
+    @max_ranks_array = max_ranks.map do |max_rank|
+      rank_info = {
+        max_rank: max_rank,
+        upvotes: max_rank.upvotes,
+        downvotes: max_rank.downvotes
+      }
+    end
   end
   
   def create

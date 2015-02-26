@@ -67,7 +67,7 @@ describe GamesController, type: :controller do
       end
       
       get :show, { id: @game.id }, { fingerprint: '123456'}
-      expect(assigns(:max_ranks).count).to eq(MaxRank.where(game_id: @game.id).count)
+      expect(assigns(:max_ranks_array).count).to eq(MaxRank.where(game_id: @game.id).count)
     end
     
   end

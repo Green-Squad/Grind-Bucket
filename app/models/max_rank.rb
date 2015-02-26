@@ -5,4 +5,12 @@ class MaxRank < ActiveRecord::Base
   
   validates :source, presence: true
   validates :user, presence: true
+  
+  def upvotes
+    Vote.where(max_rank_id: id, vote: 1).count
+  end
+  
+  def downvotes
+    Vote.where(max_rank_id: id, vote: -1).count
+  end  
 end
