@@ -1,6 +1,11 @@
 <%= render partial: 'max_rank/form' %>
-
-<% @max_ranks_array.each do |max_rank| %>
+<% threshold = nil %>
+<% @max_ranks_array.each_with_index do |max_rank, i| %>
+<% if max_rank[:upvotes] - max_rank[:downvotes] < 0 || i >= 10
+    threshold = i
+  break
+  end
+%>
 <p>
   <div>
     Rank Type: <%= max_rank[:max_rank].rank_type.name %>
@@ -22,5 +27,34 @@
       Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
     </div>
   </div>
+  <%= i + 1%>
+
 </p>
+<% end %>
+<% if threshold %>
+<button id="threshold-button">Show ranks below the threshold</button>
+  <div id="threshold">
+    <% @max_ranks_array[threshold, @max_ranks_array.count - threshold].each_with_index do |max_rank, i| %>
+    <div>
+      Rank Type: <%= max_rank[:max_rank].rank_type.name %>
+    </div>
+    <div>
+      Value: <%= max_rank[:max_rank].value %>
+    </div>
+    <div>
+      Source: <%= max_rank[:max_rank].source %>
+    </div>
+    <div id="<%= max_rank[:max_rank].id %>">
+      <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+        upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
+      </div>
+      <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+        downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
+      </div>
+      <div>
+        Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
+      </div>
+    </div>
+    <% end %>
+  </div>
 <% end %>
