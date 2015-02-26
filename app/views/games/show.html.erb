@@ -11,44 +11,13 @@
     <div>
       Source: <%= max_rank[:max_rank].source %>
     </div>
-    <div class="upvote" data-max-rank-id=" <%= max_rank[:max_rank].id %>">
-      upvote (<%= max_rank[:upvotes] %>)
-    </div>
-    <div class="downvote" data-max-rank-id=" <%= max_rank[:max_rank].id %>">
-      downvote (<%= max_rank[:downvotes] %>)
+    <div id="<%= max_rank[:max_rank].id %>">
+      <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+        upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
+      </div>
+      <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+        downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
+      </div>
     </div>
   </p>
 <% end %>
-
-<script>
-$(function() {
-  $('.upvote').click(function() {
-    var maxRankId = $(this).data('max-rank-id')
-    $.ajax({
-      type : 'POST',
-      url : '/votes/new',
-      data : {
-        vote: {
-          max_rank_id : maxRankId,
-          vote: 1
-        }
-      }
-    }).done(function(msg) {});
-  });
-   $('.downvote').click(function() {
-    var maxRankId = $(this).data('max-rank-id')
-    $.ajax({
-      type : 'POST',
-      url : '/votes/new',
-      data : {
-        vote: {
-          max_rank_id : maxRankId,
-          vote: -1
-        }
-      }
-    }).done(function(msg) {});
-  });
-  
-});
-</script>
-
