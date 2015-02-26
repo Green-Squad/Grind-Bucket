@@ -22,7 +22,7 @@ $(function() {
     }
     
     function errorVote(_this) {
-      
+      _this.addClass('error')
     }
     
     function changeVote(_this, vote) {
@@ -42,19 +42,21 @@ $(function() {
                     vote: vote
                 }
             },
-            statusCode: {
-                200: function() {
+            complete: function(e) {
+              switch (e.status) {
+                case 200:
                     switchVote(_this, maxRankId);
-                },
-                201: function() {
+                    break;
+                case 201:
                     incrementVote(_this);
-                },
-                204: function() {
+                    break;
+                case 204: 
                     decrementVote(_this);
-                },
-                422: function() {
+                    break;
+                default:
                     errorVote(_this);
-                }
+                    break
+              }
             }
         });
     }
