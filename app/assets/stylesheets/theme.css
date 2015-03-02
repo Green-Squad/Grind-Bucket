@@ -371,7 +371,8 @@ aside:not(.collapsed) .navigation ul li.active ul{
 aside.left-panel.collapsed .navigation ul li ul{
 	position:absolute;
 	z-index:3;
-	left:100%;
+	/*left:100%;*/
+	display: none;
 	top:0px;
 	background-color:#F2F2F4;
 	box-shadow:none;
@@ -1390,12 +1391,13 @@ Responsive Stying
 	-ms-transform:translate3d(250px, 0px, 0px); 
 	-webkit-transform:translate3d(250px, 0px, 0px); 
 	-moz-transition: translate3d(250px, 0px, 0px);
-	-o-transition: translate3d(250px, 0px, 0px)}
+	-o-transition: translate3d(250px, 0px, 0px);}
 	
 
 	
 	aside.left-panel{
-		left:100%;}
+		left: -250px;
+		}
 	
 	section.content{
 		margin-left:0px;}
