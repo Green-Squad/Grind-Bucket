@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20150217182732) do
   create_table "max_ranks", force: :cascade do |t|
     t.string   "value"
     t.string   "source"
+    t.boolean  "verified",     default: false
     t.integer  "game_id"
     t.integer  "rank_type_id"
     t.integer  "user_id"

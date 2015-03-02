@@ -6,6 +6,11 @@ describe MaxRank, type: :model do
       it 'with a source' do
         expect{MaxRank.create(source: Faker::Internet.url, user_id: FactoryGirl.create(:user).id)}.to change{MaxRank.count}.by(1)
       end
+      
+      it 'with default verified false' do
+        max_rank = MaxRank.create(source: Faker::Internet.url, user_id: FactoryGirl.create(:user).id)
+        expect(max_rank.verified).to eq(false)
+      end
     end
     
     context 'Unsuccessful creation' do
