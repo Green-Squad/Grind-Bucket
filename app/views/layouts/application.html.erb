@@ -1,17 +1,33 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>LevelCap</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <script async src='https://www.google.com/recaptcha/api.js'></script>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <h1><%= current_user.username if current_user %></h1>
-  <%= render partial: 'layouts/flash' %>
-  <%= render partial: 'layouts/search' %>
-  <%= yield %>
+<html lang="en">
+  <head>
+    <title>LevelCap</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <script async src='https://www.google.com/recaptcha/api.js'></script>
+    <%= csrf_meta_tags %>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-</body>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <%= render partial: 'layouts/left_panel' %>
+    <section class="content">
+      <%= render partial: 'layouts/header' %>
+      <div class="warper container-fluid">
+         <%= render partial: 'layouts/flash' %>
+        <div class="page-header"><h1><%= yield(:header) %> <small><%= yield(:small_header) %></small></h1></div>
+        <%= yield %>
+      </div>
+      <%= render partial: 'layouts/footer' %>
+    </section>
+
+  </body>
 </html>
