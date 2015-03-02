@@ -1,7 +1,11 @@
 class Game < ActiveRecord::Base
+  extend FriendlyId
   require 'open-uri'
   paginates_per 50
   validates :name, presence: true
+  friendly_id :slug_candidates, use: [:slugged, :finders]
+  
+  after_create :fix_slug
   
   def approve 
     self.status = 'Approved'
@@ -12,6 +16,16 @@ class Game < ActiveRecord::Base
     self.status = 'Rejected'
     save
   end
+  
+
+  def slug_candidates
+    [
+      :name,
+      [:name, :id]
+    ]
+  end
+  
+  
   
   def self.getJSON
     game_platforms = [ 'ps4', 'xboxone', 'ps3', 'xbox360', 'pc', 'wii-u' ]
@@ -45,6 +59,13 @@ class Game < ActiveRecord::Base
     select_list_array = approved_games.map do |game|
       [game.name, game.id]
     end
+  end
+  
+  private
+  
+  def fix_slug
+    self.slug = nil
+    self.save!
   end
   
 end

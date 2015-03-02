@@ -141,5 +141,14 @@ describe Game, type: :model do
       end
     end
   end
+  
+  describe '.fix_slug' do
+    it 'creates unique slug' do
+      game = FactoryGirl.create(:game)
+      game2 = FactoryGirl.create(:game, name: game.name)
+      
+      expect(game.slug).to_not eq(game2.slug)
+    end
+  end
 
 end
