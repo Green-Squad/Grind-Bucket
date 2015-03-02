@@ -10,25 +10,25 @@ class MaxRanksController < ApplicationController
     else
       flash[:error] = 'Error creating a max rank.'
     end
-    redirect_to :back || root_url
+    redirect_back
   end
 
   def verify
     if @max_rank && @max_rank.verify
-        flash[:success] = "Successfully verified Max Rank #{@max_rank.id}."
+      flash[:success] = "Successfully verified Max Rank #{@max_rank.id}."
     else
       flash[:error] = "Max Rank #{params[:id]} could not be found."
     end
-    redirect_to :back || root_url
+    redirect_back
   end
 
   def unverify
     if @max_rank && @max_rank.unverify
-        flash[:success] = "Successfully unverified Max Rank #{@max_rank.id}."
+      flash[:success] = "Successfully unverified Max Rank #{@max_rank.id}."
     else
       flash[:error] = "Max Rank #{params[:id]} could not be found."
     end
-    redirect_to :back || root_url
+    redirect_back
   end
 
   private

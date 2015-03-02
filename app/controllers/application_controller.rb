@@ -70,7 +70,15 @@ class ApplicationController < ActionController::Base
     json_response = JSON.load(open("#{url}?secret=#{secret}&response=#{response}"))
     unless json_response['success']
       flash[:error] = 'Could not verify that you are human. Please try again.'
-      redirect_to :back || root_url 
+      redirect_back
+    end
+  end
+  
+  def redirect_back
+    if request.env["HTTP_REFERER"]
+      redirect_to :back
+    else 
+      redirect_to root_url 
     end
   end
 
