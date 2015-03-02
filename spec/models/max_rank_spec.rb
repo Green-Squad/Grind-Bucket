@@ -52,6 +52,38 @@ describe MaxRank, type: :model do
     end
   end
   
+  describe '#verify' do
+    it 'changes from verified false to true' do
+      max_rank = FactoryGirl.create(:max_rank)
+      expect(max_rank.verified).to eq(false)
+      max_rank.verify
+      expect(max_rank.verified).to eq(true)
+    end
+    
+    it 'stays verified true' do
+      max_rank = FactoryGirl.create(:max_rank, verified: true)
+      expect(max_rank.verified).to eq(true)
+      max_rank.verify
+      expect(max_rank.verified).to eq(true)
+    end
+  end
+  
+  describe '#unverify' do
+    it 'changes from verified true to false' do
+      max_rank = FactoryGirl.create(:max_rank, verified: true)
+      expect(max_rank.verified).to eq(true)
+      max_rank.unverify
+      expect(max_rank.verified).to eq(false)
+    end
+    
+    it 'stays verified true' do
+      max_rank = FactoryGirl.create(:max_rank)
+      expect(max_rank.verified).to eq(false)
+      max_rank.unverify
+      expect(max_rank.verified).to eq(false)
+    end
+  end
+  
   describe '.sort' do
     it 'returns the sorted array' do
       Vote.delete_all

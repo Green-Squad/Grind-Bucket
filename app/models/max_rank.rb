@@ -12,7 +12,17 @@ class MaxRank < ActiveRecord::Base
   
   def downvotes
     Vote.where(max_rank_id: id, vote: -1).count
-  end  
+  end
+  
+  def verify
+    self.verified = true
+    save
+  end
+  
+  def unverify
+    self.verified = false
+    save
+  end    
   
   def self.sort(array)
     sorted_array = array.sort do |a, b|

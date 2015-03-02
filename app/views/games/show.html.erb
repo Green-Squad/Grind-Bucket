@@ -26,6 +26,18 @@
     <div>
       Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
     </div>
+    <div>
+      Verified: <%= max_rank[:max_rank].verified %>
+    </div>
+    <% if admin_user_signed_in? %>
+    <div>
+      <% if max_rank[:max_rank].verified %>
+        <%= link_to 'Unverify', unverify_max_rank_path(max_rank[:max_rank].id) %>
+      <% else %>
+        <%= link_to 'Verify', verify_max_rank_path(max_rank[:max_rank].id) %>
+      <% end %>
+    </div>
+    <% end %>
   </div>
   <%= i + 1%>
 
