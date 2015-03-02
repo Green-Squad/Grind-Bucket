@@ -57,9 +57,13 @@ describe GamesController, type: :controller do
       expect(response).to render_template('show')
     end
     
-    it 'has all of its max ranks' do
+    it 'has all of its unverified max ranks' do
       10.times do 
         FactoryGirl.create(:max_rank, game_id: @game.id)
+      end
+      
+      10.times do 
+        FactoryGirl.create(:max_rank, game_id: @game.id, verified: true)
       end
       
       10.times do 
@@ -67,8 +71,26 @@ describe GamesController, type: :controller do
       end
       
       get :show, { id: @game.id }, { fingerprint: '123456'}
-      expect(assigns(:max_ranks_array).count).to eq(MaxRank.where(game_id: @game.id).count)
+      expect(assigns(:unverified_max_ranks_array).count).to eq(MaxRank.where(game_id: @game.id, verified: false).count)
     end
+    
+    it 'has all of its verified max ranks' do
+      10.times do 
+        FactoryGirl.create(:max_rank, game_id: @game.id)
+      end
+      
+      10.times do 
+        FactoryGirl.create(:max_rank, game_id: @game.id, verified: true)
+      end
+      
+      10.times do 
+        FactoryGirl.create(:max_rank)
+      end
+      
+      get :show, { id: @game.id }, { fingerprint: '123456'}
+      expect(assigns(:verified_max_ranks_array).count).to eq(MaxRank.where(game_id: @game.id, verified: true).count)
+    end
+
     
   end
   

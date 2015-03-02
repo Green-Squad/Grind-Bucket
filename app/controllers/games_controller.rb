@@ -9,15 +9,27 @@ class GamesController < ApplicationController
 
   
   def show
-    max_ranks = MaxRank.where(game_id: @game.id)
-    @max_ranks_array = max_ranks.map do |max_rank|
+    unverified_max_ranks = MaxRank.where(game_id: @game.id, verified: false)
+    verified_max_ranks = MaxRank.where(game_id: @game.id, verified: true)
+    
+    @unverified_max_ranks_array = unverified_max_ranks.map do |max_rank|
       rank_info = {
         max_rank: max_rank,
         upvotes: max_rank.upvotes,
         downvotes: max_rank.downvotes
       }
     end
-    @max_ranks_array = MaxRank.sort(@max_ranks_array)
+    
+    @verified_max_ranks_array = verified_max_ranks.map do |max_rank|
+      rank_info = {
+        max_rank: max_rank,
+        upvotes: max_rank.upvotes,
+        downvotes: max_rank.downvotes
+      }
+    end
+    
+    @unverified_max_ranks_array = MaxRank.sort(@unverified_max_ranks_array)
+    @verified_max_ranks_array = MaxRank.sort(@verified_max_ranks_array)
   end
   
   def create
