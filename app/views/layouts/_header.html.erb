@@ -1,17 +1,29 @@
-<header class="top-head container-fluid">
-  <button type="button" class="navbar-toggle pull-left">
-    <span class="sr-only">Toggle navigation</span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-  </button>
+<header class="top-head container-fluid header-table">
+
+    <button type="button" class="navbar-toggle cell">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    
+    <span class="brand cell">
+      Level Cap
+    </span>
+    
+    <span id="filler"></span>
   
-  <div class="brand pull-left">Level Cap</div>
+  <span class="cell">
+    <span class="cell full-width">
+      <%= form_tag(search_path, method: "get", class: 'app-search', id: "search-form") do %>
+        
+        <%= text_field_tag :query, params[:query], placeholder: "e.g. Grand Theft Auto", class: "form-control form-control-circle", id: 'search-box' %>
 
-  <%= form_tag(search_path, method: "get", class: 'navbar-left app-search pull-right', id: "search-form") do %>
-    <%= text_field_tag :query, params[:query], placeholder: "e.g. Grand Theft Auto", class: "form-control form-control-circle", id: 'search-box' %>
-  <% end %>
-
-
+      <% end %>
+    </span>
+    
+      <span id="search-toggle" class="fa fa-search cell"></span>
+  </span>
+  
 </header>
 <!-- Header Ends -->
