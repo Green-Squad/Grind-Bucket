@@ -27,3 +27,13 @@
   -ms-transition: 0.3s all;
   transition: 0.3s all;
 }
+
+.circle-border {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.img {
+  display: inline-block;
+}

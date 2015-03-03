@@ -237,10 +237,9 @@ aside.left-panel.lg + .content {
   font-size: 16px;
 }
 
-.user img {
+.img {
   border: 1px solid #383c4a;
   padding: 8px;
-  width: 70px;
 }
 
 .user .user-login {
