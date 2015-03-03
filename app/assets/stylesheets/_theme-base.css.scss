@@ -1,0 +1,41 @@
+.user .user-login .status-icon.signout {
+  color: $secondary-color;
+}
+
+.navigation > ul > li:hover > a, .navigation > ul > li.active:hover > a, .navigation > ul > li.active > a {
+  background-color: $secondary-color;
+}
+
+aside.left-panel {
+  background-color: $primary-color;
+}
+
+.user-login .dropdown-menu {
+  border-color: lighten($primary-color, 4%);
+  background-color: $primary-color;
+}
+
+.navigation > ul > li > a {
+  border-color: lighten($primary-color, 2%);
+}
+
+.img {
+  border-color: lighten($primary-color, 6%);
+}
+
+// Turbolinks
+html.turbolinks-progress-bar::before {
+  background-color: $secondary-color !important;
+}
+
+.user h4.user-name {
+  color: $panel-text-color;
+}
+
+.navigation > ul > li.has-submenu:after, .navigation > ul > li > a, .navigation > ul:hover > li.active > a {
+  color: $nav-link-color;
+}
+
+.navigation > ul > li > a:hover {
+  color: $nav-link-hover-color;
+}

@@ -170,7 +170,6 @@ a:hover {
  *****************************/
 
 aside.left-panel {
-  background-color: #2b2f3e;
   width: 230px;
   position: fixed;
   padding: 25px 0px;
@@ -233,12 +232,12 @@ aside.left-panel.lg + .content {
 }
 
 .user h4.user-name {
-  color: #8e909a;
   font-size: 16px;
 }
 
 .img {
-  border: 1px solid #383c4a;
+  border-width: 1px;
+  border-style: solid;
   padding: 8px;
 }
 
@@ -254,9 +253,9 @@ aside.left-panel.lg + .content {
 }
 
 .user-login .dropdown-menu {
-  border: 1px solid #343847;
+  border-style: solid;
+  border-width: 1px;
   color: #616574;
-  background-color: #2B2F3E;
   width: 100%;
   margin-top: -1px;
   min-width: 100%;
@@ -295,9 +294,7 @@ aside.left-panel.lg + .content {
   color: #4a4e5d;
 }
 
-.user .user-login .status-icon.signout {
-  color: #FF404B;
-}
+
 
 /*****************************
  Navigation
@@ -316,7 +313,6 @@ aside.left-panel.lg + .content {
   font-family: 'FontAwesome';
   display: inline-block;
   position: absolute;
-  color: #7a7e8a;
   right: 15px;
   transition: all 0.4s;
   -moz-transition: all 0.4s;
@@ -333,12 +329,12 @@ aside.left-panel.lg + .content {
 .navigation > ul > li > a {
   display: block;
   padding: 12px 25px;
-  color: #7a7e8a;
   text-transform: uppercase;
   font-size: 13px;
   text-decoration: none;
   font-weight: 800;
-  border-bottom: 1px solid #2f3444;
+  border-style: solid;
+  border-width: 0 0 1px 0;
   transition: all 0.4s;
   -moz-transition: all 0.4s;
   -webkit-transition: all 0.4s;
@@ -348,12 +344,10 @@ aside.left-panel.lg + .content {
 .navigation > ul:hover > li.active > a {
   background-color: transparent;
   box-shadow: none;
-  color: #7a7e8a;
 }
 
 .navigation > ul > li:hover > a, .navigation > ul > li.active:hover > a, .navigation > ul > li.active > a {
   color: #fff;
-  background-color: #ff404b;
   -webkit-box-shadow: inset -6px 0 8px -2px rgba(0,0,0,0.3);
   box-shadow: inset -6px 0 8px -2px rgba(0,0,0,0.3);
 }

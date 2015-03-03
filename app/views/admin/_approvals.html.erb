@@ -7,7 +7,7 @@ pending_games = Game.where(status: "Pending").order(:created_at).page params[:pa
   <tr>
     <th> ID </th>
     <th> Name </th>
-    <th> Color </th>
+    <th> Theme </th>
     <th> Image </th>
     <th> Status </th>
     <th> Actions </th>
@@ -16,7 +16,7 @@ pending_games = Game.where(status: "Pending").order(:created_at).page params[:pa
   <tr>
     <td> <%= game.id %> </td>
     <td> <%= game.name %> </td>
-    <td> <%= game.color %> </td>
+    <td> <%= game.theme %> </td>
     <td> <%= game.image %> </td>
     <td> <%= game.status %> </td>
 

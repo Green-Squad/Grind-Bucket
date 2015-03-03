@@ -1,8 +1,7 @@
 <% provide(:header, @game.name) %>
 <% provide(:small_header, '') %>
+<% provide(:theme, @game.theme) %>
 <%= render partial: 'max_rank/form' %>
-
-
 
 <% @verified_max_ranks_array.each_with_index do |max_rank| %>
 <p>

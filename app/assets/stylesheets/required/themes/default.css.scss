@@ -1,0 +1,11 @@
+@import "variables";
+
+$primary-color: #2b2f3e;
+$secondary-color: #ff404b;
+$panel-text-color: #8e909a;
+$nav-link-color: #7a7e8a;
+$nav-link-hover-color: #fff;
+
+.default {
+  @import "theme-base"
+}
