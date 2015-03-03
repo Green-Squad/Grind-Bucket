@@ -13,7 +13,12 @@ $(function(){
 	********************************/
 	
 	$('.navbar-toggle').click(function() {
-		$('aside.left-panel').toggleClass('collapsed'); 
+		$('aside.left-panel').toggleClass('collapsed');
+		if ($.cookie('collapsed')) {
+		  $.cookie('collapsed', false, { expires: 7 });
+		} else {
+		  $.cookie('collapsed', true, { expires: 7 });
+		}
 	});
 	
 	
