@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20150302155735) do
 
   create_table "games", force: :cascade do |t|
     t.string   "name"
-    t.string   "color"
+    t.string   "theme"
     t.string   "image"
     t.string   "status",     default: "Pending"
     t.string   "slug"
