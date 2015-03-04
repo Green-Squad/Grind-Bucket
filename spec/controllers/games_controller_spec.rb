@@ -21,7 +21,7 @@ describe GamesController, type: :controller do
       end
       get :index, nil, { fingerprint: '123456'}
       
-      expect(assigns(:games).count).to be <=  50
+      expect(assigns(:games).count).to be <=  25
     end
     
     it 'should only display approved games' do

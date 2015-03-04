@@ -1,10 +1,23 @@
 <% provide(:header, 'Games') %>
 <% provide(:small_header, '') %>
-<button id="add-game-button">Add Game</button>
-<div id="add-game-box">
-  <%= render partial: 'form' %>
+<div class="row">
+  <div class="col-md-5 col-md-push-7" id="button-col">
+    <button id="add-game-button" class="btn btn-success">
+      Add Game
+    </button>
+    <button id="cancel-add-game-button" class="btn btn-danger">
+      Cancel
+    </button>
+  </div>
+  <div class="col-md-7 col-md-pull-5">
+    <div id="add-game-box">
+      <%= render partial: 'form' %>
+    </div>
+    <div class="list-group">
+      <% @games.each do |game| %>
+      <%= link_to game.name, game_path(game), class: 'list-group-item' %>
+      <% end %>
+    </div>
+    <%= paginate @games %>
+  </div>
 </div>
-<% @games.each do |game| %>
-  <p><%= link_to game.name, game_path(game) %></p>
-<% end %>
-<%= paginate @games %>

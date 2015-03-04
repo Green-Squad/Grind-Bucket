@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   extend FriendlyId
   require 'open-uri'
-  paginates_per 50
+  paginates_per 25
   validates :name, presence: true
   friendly_id :slug_candidates, use: [:slugged, :finders]
   
