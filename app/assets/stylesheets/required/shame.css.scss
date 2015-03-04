@@ -1,3 +1,5 @@
+@import 'variables';
+
 .error {
   background: #FF0000;
 }
@@ -36,4 +38,73 @@
 
 .img {
   display: inline-block;
+}
+
+.game-header {
+  height: 150px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 0 50px;
+  width: 100%;
+  display: table;
+  overflow: hidden;
+}
+
+.default-image {
+  background-image: asset_url('background.png');
+}
+
+.game-image {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center; 
+}
+
+.game-header h1 {
+  margin: 0;
+  font-size: 26px;
+  display: table-cell;
+  vertical-align: middle;
+      line-height: 1.5em;
+}
+
+.game-header h1 span {
+  padding: 5px; 
+    /* Needs prefixing */
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  -moz-box-decoration-break: clone;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: $screen-sm-min) { 
+ .game-header h1 {
+    font-size: 30px;
+
+  }
+  
+  .game-header h1 span {
+    padding: 7px; 
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+  .game-header h1 {
+    font-size: 34px;
+  }
+  .game-header h1 span {
+    padding: 8px; 
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: $screen-lg-min) {
+  .game-header h1 {
+    font-size: 36px;
+  }
+  .game-header h1 span {
+    padding: 10px; 
+  }
 }

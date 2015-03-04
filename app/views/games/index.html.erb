@@ -1,7 +1,9 @@
 <% provide(:header, 'Games') %>
 <% provide(:small_header, '') %>
-<%= render partial: 'form' %>
-
+<button id="add-game-button">Add Game</button>
+<div id="add-game-box">
+  <%= render partial: 'form' %>
+</div>
 <% @games.each do |game| %>
   <p><%= link_to game.name, game_path(game) %></p>
 <% end %>
