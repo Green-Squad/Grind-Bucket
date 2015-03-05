@@ -13,11 +13,14 @@ describe RankType, type: :model do
     end
     
     it 'has the same count as RankType.count' do
-      expect(RankType.select_list.count).to eq(RankType.count)
+      # Adding one to RankType.count for the empty element we add for a placeholder
+      expect(RankType.select_list.count).to eq(RankType.count + 1)
     end
     
     it 'has the correct id for each name' do
       select_list = RankType.select_list
+      # Remove first empty element
+      select_list.shift
       select_list.each do |name, id|
         rank_type = RankType.find(id)
         expect(rank_type.name).to eq(name)
@@ -37,10 +40,13 @@ describe RankType, type: :model do
     end
     
     it 'is sorted' do
-      select_list = RankType.select_list.sort do |a, b|
+      list = RankType.select_list
+      # Remove first empty element
+      list.shift
+      select_list = list.sort do |a, b|
         a[0] <=> b[0]
       end
-      expect(RankType.select_list).to eq(select_list)
+      expect(list).to eq(select_list)
     end
   end
 
