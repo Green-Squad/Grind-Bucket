@@ -1,5 +1,5 @@
 ActiveAdmin.register MaxRank do
-  permit_params :value
+  permit_params :value, :source, :verified
 
 
   # See permitted parameters documentation:
