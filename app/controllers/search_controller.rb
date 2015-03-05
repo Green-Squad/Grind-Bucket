@@ -9,7 +9,7 @@ class SearchController < ApplicationController
       else
         begin
           @google_request = JSON.load(open(ENV['SEARCH_URL'] + params[:query]));
-          @total_results = @google_request["queries"]["request"][0]["totalResults"].to_i
+          @total_results = @google_request['items'].present? ? @google_request['items'].size : 0
           render 'search'
         rescue
           redirect_to "https://www.google.com/?#q=site:lvlcap.kyledornblaser.com+#{params[:query]}"
