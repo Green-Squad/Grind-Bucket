@@ -3,126 +3,137 @@
 <% provide(:game_image, '') %>
 <% provide(:theme, @game.theme) %>
 
-
-
-<%= render partial: 'max_rank/form' %>
-
-<% @verified_max_ranks_array.each_with_index do |max_rank| %>
-<p>
-  <div>
-    Rank Type: <%= max_rank[:max_rank].rank_type.name %>
+<div class="row">
+  <div class="col-md-5 col-md-push-7" id="button-col">
+    <button id="add-max-rank-button" class="btn btn-success">
+      Add Max Rank
+    </button>
+    <button id="cancel-add-max-rank-button" class="btn btn-danger">
+      Cancel
+    </button>
   </div>
-  <div>
-    Value: <%= max_rank[:max_rank].value %>
-  </div>
-  <div>
-    Source: <%= max_rank[:max_rank].source %>
-  </div>
-  <div id="<%= max_rank[:max_rank].id %>">
-    <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-      upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
+  <div class="col-md-7 col-md-pull-5">
+    <div id="add-max-rank-box">
+      <%= render partial: 'max_rank/form' %>
     </div>
-    <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-      downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
-    </div>
-    <div>
-      Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
-    </div>
-    <div>
-      Verified: <%= max_rank[:max_rank].verified %>
-    </div>
-    <% if admin_user_signed_in? %>
-    <div>
-      <% if max_rank[:max_rank].verified %>
-        <%= link_to 'Unverify', unverify_max_rank_path(max_rank[:max_rank].id) %>
-      <% else %>
-        <%= link_to 'Verify', verify_max_rank_path(max_rank[:max_rank].id) %>
-      <% end %>
-    </div>
-    <% end %>
-  </div>
-</p>
-<% end %>
-
-
-
-<% threshold = nil %>
-<% @unverified_max_ranks_array.each_with_index do |max_rank, i| %>
-<% if max_rank[:upvotes] - max_rank[:downvotes] < 0 || i >= 10
-    threshold = i
-  break
-  end
-%>
-<p>
-  <div>
-    Rank Type: <%= max_rank[:max_rank].rank_type.name %>
-  </div>
-  <div>
-    Value: <%= max_rank[:max_rank].value %>
-  </div>
-  <div>
-    Source: <%= max_rank[:max_rank].source %>
-  </div>
-  <div id="<%= max_rank[:max_rank].id %>">
-    <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-      upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
-    </div>
-    <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-      downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
-    </div>
-    <div>
-      Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
-    </div>
-    <div>
-      Verified: <%= max_rank[:max_rank].verified %>
-    </div>
-    <% if admin_user_signed_in? %>
-    <div>
-      <% if max_rank[:max_rank].verified %>
-        <%= link_to 'Unverify', unverify_max_rank_path(max_rank[:max_rank].id) %>
-      <% else %>
-        <%= link_to 'Verify', verify_max_rank_path(max_rank[:max_rank].id) %>
-      <% end %>
-    </div>
-    <% end %>
-  </div>
-  <%= i + 1%>
-
-</p>
-<% end %>
-<% if threshold %>
-<button id="threshold-button">Show ranks below the threshold</button>
-  <div id="threshold">
-    <% @unverified_max_ranks_array[threshold, @unverified_max_ranks_array.count - threshold].each_with_index do |max_rank, i| %>
-    <div>
-      Rank Type: <%= max_rank[:max_rank].rank_type.name %>
-    </div>
-    <div>
-      Value: <%= max_rank[:max_rank].value %>
-    </div>
-    <div>
-      Source: <%= max_rank[:max_rank].source %>
-    </div>
-    <div id="<%= max_rank[:max_rank].id %>">
-      <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-        upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
-      </div>
-      <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-        downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
+    <% @verified_max_ranks_array.each_with_index do |max_rank| %>
+    <p>
+      <div>
+        Rank Type: <%= max_rank[:max_rank].rank_type.name %>
       </div>
       <div>
-        Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
+        Value: <%= max_rank[:max_rank].value %>
       </div>
-      <% if admin_user_signed_in? %>
       <div>
-        <% if max_rank[:max_rank].verified %>
+        Source: <%= max_rank[:max_rank].source %>
+      </div>
+      <div id="<%= max_rank[:max_rank].id %>">
+        <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+          upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
+        </div>
+        <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+          downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
+        </div>
+        <div>
+          Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
+        </div>
+        <div>
+          Verified: <%= max_rank[:max_rank].verified %>
+        </div>
+        <% if admin_user_signed_in? %>
+        <div>
+          <% if max_rank[:max_rank].verified %>
           <%= link_to 'Unverify', unverify_max_rank_path(max_rank[:max_rank].id) %>
-        <% else %>
+          <% else %>
           <%= link_to 'Verify', verify_max_rank_path(max_rank[:max_rank].id) %>
+          <% end %>
+        </div>
         <% end %>
       </div>
+    </p>
     <% end %>
+
+    <% threshold = nil %>
+    <% @unverified_max_ranks_array.each_with_index do |max_rank, i| %>
+    <% if max_rank[:upvotes] - max_rank[:downvotes] < 0 || i >= 10
+        threshold = i
+      break
+      end
+%>
+    <p>
+      <div>
+        Rank Type: <%= max_rank[:max_rank].rank_type.name %>
+      </div>
+      <div>
+        Value: <%= max_rank[:max_rank].value %>
+      </div>
+      <div>
+        Source: <%= max_rank[:max_rank].source %>
+      </div>
+      <div id="<%= max_rank[:max_rank].id %>">
+        <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+          upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
+        </div>
+        <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+          downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
+        </div>
+        <div>
+          Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
+        </div>
+        <div>
+          Verified: <%= max_rank[:max_rank].verified %>
+        </div>
+        <% if admin_user_signed_in? %>
+        <div>
+          <% if max_rank[:max_rank].verified %>
+          <%= link_to 'Unverify', unverify_max_rank_path(max_rank[:max_rank].id) %>
+          <% else %>
+          <%= link_to 'Verify', verify_max_rank_path(max_rank[:max_rank].id) %>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+      <%= i + 1%>
+
+    </p>
+    <% end %>
+    <% if threshold %>
+    <button id="threshold-button">
+      Show ranks below the threshold
+    </button>
+    <div id="threshold">
+      <% @unverified_max_ranks_array[threshold, @unverified_max_ranks_array.count - threshold].each_with_index do |max_rank, i| %>
+      <div>
+        Rank Type: <%= max_rank[:max_rank].rank_type.name %>
+      </div>
+      <div>
+        Value: <%= max_rank[:max_rank].value %>
+      </div>
+      <div>
+        Source: <%= max_rank[:max_rank].source %>
+      </div>
+      <div id="<%= max_rank[:max_rank].id %>">
+        <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+          upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
+        </div>
+        <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+          downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
+        </div>
+        <div>
+          Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
+        </div>
+        <% if admin_user_signed_in? %>
+        <div>
+          <% if max_rank[:max_rank].verified %>
+          <%= link_to 'Unverify', unverify_max_rank_path(max_rank[:max_rank].id) %>
+          <% else %>
+          <%= link_to 'Verify', verify_max_rank_path(max_rank[:max_rank].id) %>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+      <% end %>
     </div>
     <% end %>
   </div>
-<% end %>
+</div>

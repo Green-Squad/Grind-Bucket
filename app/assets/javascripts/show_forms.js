@@ -14,4 +14,20 @@ $(function() {
     $('#add-game-button').show();
     $('#add-game-box').hide();
   });
+
+  $('#add-max-rank-button').click(function() {
+    $('#add-max-rank-button').hide();
+    $('#cancel-add-max-rank-button').show();
+    $('#add-max-rank-box').show();
+    grecaptcha.render('recaptcha-max-rank', {
+      'sitekey' : '6LejWAETAAAAAJiT5Y2l1h9NLIRmwLjMd2ThoJzt',
+      'theme' : 'light'
+    });
+  });
+
+  $('#cancel-add-max-rank-button').click(function() {
+    $('#cancel-add-max-rank-button').hide();
+    $('#add-max-rank-button').show();
+    $('#add-max-rank-box').hide();
+  });
 });

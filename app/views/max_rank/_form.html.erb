@@ -1,15 +1,32 @@
 <% @max_rank = MaxRank.new %>
-<%= form_for(@max_rank, url: new_max_rank_path) do |f| %>
-  <% if @game %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    Add Max Rank
+  </div>
+  <div class="panel-body">
+    <%= form_for(@max_rank, url: new_max_rank_path) do |f| %>
+    <% if @game %>
     <%= f.hidden_field :game_id, value: @game.id %>
-  <% else %>
-    <%= f.select :game_id, Game.select_list, {}, { class: 'select2' } %>
-  <% end %>
-  <%= f.select :rank_type_id, RankType.select_list %>
-  <%= f.label :value, 'Value:' %>
-  <%= f.text_field :value %>
-   <%= f.label :source, 'Source:' %>
-  <%= f.text_field :source %>
-  <div class="g-recaptcha" data-sitekey="6LejWAETAAAAAJiT5Y2l1h9NLIRmwLjMd2ThoJzt"></div>
-  <%= f.submit 'Submit' %>
-<% end %>
+    <% else %>
+    <div class="form-group">
+      <%= f.select :game_id, Game.select_list, {}, { class: 'select2' } %>
+    </div>
+    <% end %>
+    <div class="form-group">
+      <%= f.select :rank_type_id, RankType.select_list, {}, { class: 'select2', id: 'rank-type-select2' } %>
+    </div>
+    <div class="form-group">
+      <%= f.text_field :value, placeholder: 'Value', class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.text_field :source, placeholder: 'Source', class: 'form-control' %>
+    </div>
+    <div class="form-group">
+       <div class="g-recaptcha" id="recaptcha-max-rank"></div>
+    </div>
+    <div class="form-group">
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    </div>
+    <% end %>
+  </div>
+</div>
