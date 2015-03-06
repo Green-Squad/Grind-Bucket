@@ -1,0 +1,50 @@
+<% provide(:header, 'Max Ranks') %>
+<% provide(:small_header, 'Website Subtitle') %>
+<% provide(:game_image, '') %>
+<div class="row">
+  <div class="col-md-5 col-md-push-7" id="button-col">
+    <button id="add-game-button" class="btn btn-success">
+      Add Game
+    </button>
+    <button id="cancel-add-game-button" class="btn btn-danger hidden">
+      Cancel Add Game
+    </button>
+    <button id="add-max-rank-button" class="btn btn-success">
+      Add Max Rank
+    </button>
+    <button id="cancel-add-max-rank-button" class="btn btn-danger hidden">
+      Cancel Add Max Rank
+    </button>
+  </div>
+  <div class="col-md-7 col-md-pull-5">
+    <div id="add-max-rank-box" class="hidden">
+      <%= render partial: 'max_rank/form' %>
+    </div>
+    <div id="add-game-box" class="hidden">
+      <%= render partial: 'games/form' %>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">Recently Added</div>
+          <div class="list-group">
+            <% @recently_added.each do |game| %>
+              <a href="<%= game_path(game.id) %>" class="list-group-item"><%= game.name %></a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">Recent Activity</div>
+          <div class="list-group">
+            <% @recent_activity.each do |game| %>
+              <a href="<%= game_path(game.id) %>" class="list-group-item"><%= game.name %></a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

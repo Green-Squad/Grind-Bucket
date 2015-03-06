@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :users, controllers: {registrations: "users/registrations", sessions: "users/sessions", passwords: "users/passwords"}
 
-  root 'games#index'
+  root 'home#index'
 
   get   'search',                   to: 'search#search',              as: 'search'
   get   'search-items',             to: 'search#autocomplete',        as: 'search_autocomplete'

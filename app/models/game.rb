@@ -59,6 +59,7 @@ class Game < ActiveRecord::Base
     select_list_array = approved_games.map do |game|
       [game.name, game.id]
     end
+    select_list_array.unshift([-1])
   end
   
   private
