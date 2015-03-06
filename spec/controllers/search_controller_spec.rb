@@ -44,13 +44,13 @@ describe SearchController, type: :controller do
       expect(response).to redirect_to(game_url(game.id))
     end
     
-    it 'does not redirect to game page if it is pending' do
+    xit 'does not redirect to game page if it is pending' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Pending')
        get :search, { query: 'Halo 4' }, { fingerprint: '123456' }
       expect(response).to_not redirect_to(game_url(game.id))
     end
     
-    it 'redirects to search results page if no match is found' do
+    xit 'redirects to search results page if no match is found' do
       get :search, { query: 'Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL' }, { fingerprint: '123456' }
       expect(response).to render_template('search/search')
     end
@@ -63,7 +63,7 @@ describe SearchController, type: :controller do
     context 'render views' do
       render_views
       
-      it 'has search query in response' do
+      xit 'has search query in response' do
         query = 'Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL'
         get :search, { query: query }, { fingerprint: '123456' }
         expect(response.body).to match(/Halo 4 ADSFSDFSDFSDJFKLSDJFLKSDJFL/)

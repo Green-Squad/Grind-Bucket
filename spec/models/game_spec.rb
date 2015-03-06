@@ -104,11 +104,13 @@ describe Game, type: :model do
     end
     
     it 'has the same count as approved games count' do
-      expect(Game.select_list.count).to eq(Game.where(status: 'Approved').count)
+      expect(Game.select_list.count).to eq(Game.where(status: 'Approved').count + 1)
     end
     
     it 'has the correct id for each name' do
       select_list = Game.select_list
+      # Remove first empty element
+      select_list.shift
       select_list.each do |name, id|
         game = Game.find(id)
         expect(game.name).to eq(name)
@@ -117,6 +119,8 @@ describe Game, type: :model do
     
     it 'includes every approved game' do
       select_list = Game.select_list
+      # Remove first empty element
+      select_list.shift
       Game.where(status: 'Approved').each do |game|
         array = [game.name, game.id]
         expect(select_list).to include(array)
@@ -128,14 +132,20 @@ describe Game, type: :model do
     end
     
     xit 'is sorted' do
-      select_list = Game.select_list.sort do |a, b|
+      list = Game.select_list
+      # Remove first empty element
+      list.shift
+      select_list = list.sort do |a, b|
         a[0] <=> b[0]
       end
       expect(Game.select_list).to eq(select_list)
     end
     
     it 'has only approved games' do
-      Game.select_list.each do |name, id|
+      select_list = Game.select_list
+      # Remove first empty element
+      select_list.shift
+      select_list.each do |name, id|
         game = Game.find(id)
         expect(game.status).to eq('Approved')
       end

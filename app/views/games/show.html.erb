@@ -8,12 +8,12 @@
     <button id="add-max-rank-button" class="btn btn-success">
       Add Max Rank
     </button>
-    <button id="cancel-add-max-rank-button" class="btn btn-danger">
+    <button id="cancel-add-max-rank-button" class="btn btn-danger hidden">
       Cancel
     </button>
   </div>
   <div class="col-md-7 col-md-pull-5">
-    <div id="add-max-rank-box">
+    <div id="add-max-rank-box" class="hidden">
       <%= render partial: 'max_rank/form' %>
     </div>
     <% @verified_max_ranks_array.each_with_index do |max_rank| %>

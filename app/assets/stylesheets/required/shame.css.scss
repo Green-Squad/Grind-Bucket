@@ -58,7 +58,7 @@
 .game-image {
   background-size: 100%;
   background-repeat: no-repeat;
-  background-position: center; 
+  background-position: center;
 }
 
 .game-header h1 {
@@ -70,7 +70,7 @@
 }
 
 .game-header h1 span {
-  padding: 5px; 
+  padding: 5px;
     /* Needs prefixing */
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -78,14 +78,14 @@
 }
 
 /* Small devices (tablets, 768px and up) */
-@media (min-width: $screen-sm-min) { 
+@media (min-width: $screen-sm-min) {
  .game-header h1 {
     font-size: 30px;
 
   }
-  
+
   .game-header h1 span {
-    padding: 7px; 
+    padding: 7px;
   }
 }
 
@@ -95,7 +95,12 @@
     font-size: 34px;
   }
   .game-header h1 span {
-    padding: 8px; 
+    padding: 8px;
+  }
+
+  #button-col .btn {
+    display: block;
+    margin: 0 0 10px 0;
   }
 }
 
@@ -105,14 +110,9 @@
     font-size: 36px;
   }
   .game-header h1 span {
-    padding: 10px; 
+    padding: 10px;
   }
 }
-
-#button-col{
+#button-col {
   margin:0 0 10px 0;
-}
-
-#add-game-box, #cancel-add-game-button, #add-max-rank-box, #cancel-add-max-rank-button {
-  display: none;
 }
