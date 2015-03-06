@@ -30,6 +30,14 @@ class GamesController < ApplicationController
     
     @unverified_max_ranks_array = MaxRank.sort(@unverified_max_ranks_array)
     @verified_max_ranks_array = MaxRank.sort(@verified_max_ranks_array)
+    
+    votes = Vote.joins(:max_rank).where('votes.user_id = ? AND max_ranks.game_id = ?', current_user.id, @game.id)
+    
+    @votes_hash = {}
+    votes.each do |vote|
+      @votes_hash[vote.max_rank_id] = vote.vote
+    end
+    @votes_hash
   end
   
   def create

@@ -4,7 +4,7 @@
 <% provide(:theme, @game.theme) %>
 
 <div class="row">
-  <div class="col-md-5 col-md-push-7" id="button-col">
+  <div class="col-lg-5 col-lg-push-7 col-md-3 col-md-push-9" id="button-col">
     <button id="add-max-rank-button" class="btn btn-success">
       Add Max Rank
     </button>
@@ -12,127 +12,43 @@
       Cancel
     </button>
   </div>
-  <div class="col-md-7 col-md-pull-5">
+  <div class="col-lg-7 col-lg-pull-5 col-md-9 col-md-pull-3">
     <div id="add-max-rank-box">
       <%= render partial: 'max_rank/form' %>
     </div>
+
+    <% if @verified_max_ranks_array.count > 0 || @unverified_max_ranks_array.count > 0 %>
     <% @verified_max_ranks_array.each_with_index do |max_rank| %>
-    <p>
-      <div>
-        Rank Type: <%= max_rank[:max_rank].rank_type.name %>
-      </div>
-      <div>
-        Value: <%= max_rank[:max_rank].value %>
-      </div>
-      <div>
-        Source: <%= max_rank[:max_rank].source %>
-      </div>
-      <div id="<%= max_rank[:max_rank].id %>">
-        <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-          upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
-        </div>
-        <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-          downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
-        </div>
-        <div>
-          Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
-        </div>
-        <div>
-          Verified: <%= max_rank[:max_rank].verified %>
-        </div>
-        <% if admin_user_signed_in? %>
-        <div>
-          <% if max_rank[:max_rank].verified %>
-          <%= link_to 'Unverify', unverify_max_rank_path(max_rank[:max_rank].id) %>
-          <% else %>
-          <%= link_to 'Verify', verify_max_rank_path(max_rank[:max_rank].id) %>
-          <% end %>
-        </div>
-        <% end %>
-      </div>
-    </p>
+    <%= render partial: 'games/max_rank_panel', locals: { max_rank: max_rank } %>
     <% end %>
 
     <% threshold = nil %>
+
     <% @unverified_max_ranks_array.each_with_index do |max_rank, i| %>
     <% if max_rank[:upvotes] - max_rank[:downvotes] < 0 || i >= 10
         threshold = i
       break
-      end
-%>
-    <p>
-      <div>
-        Rank Type: <%= max_rank[:max_rank].rank_type.name %>
-      </div>
-      <div>
-        Value: <%= max_rank[:max_rank].value %>
-      </div>
-      <div>
-        Source: <%= max_rank[:max_rank].source %>
-      </div>
-      <div id="<%= max_rank[:max_rank].id %>">
-        <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-          upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
-        </div>
-        <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-          downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
-        </div>
-        <div>
-          Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
-        </div>
-        <div>
-          Verified: <%= max_rank[:max_rank].verified %>
-        </div>
-        <% if admin_user_signed_in? %>
-        <div>
-          <% if max_rank[:max_rank].verified %>
-          <%= link_to 'Unverify', unverify_max_rank_path(max_rank[:max_rank].id) %>
-          <% else %>
-          <%= link_to 'Verify', verify_max_rank_path(max_rank[:max_rank].id) %>
-          <% end %>
-        </div>
-        <% end %>
-      </div>
-      <%= i + 1%>
-
-    </p>
+      end %>
+    <%= render partial: 'games/max_rank_panel', locals: { max_rank: max_rank } %>
     <% end %>
+
     <% if threshold %>
-    <button id="threshold-button">
+    <button id="threshold-button" class="btn btn-default">
       Show ranks below the threshold
     </button>
+    <hr class="clear">
     <div id="threshold">
       <% @unverified_max_ranks_array[threshold, @unverified_max_ranks_array.count - threshold].each_with_index do |max_rank, i| %>
-      <div>
-        Rank Type: <%= max_rank[:max_rank].rank_type.name %>
-      </div>
-      <div>
-        Value: <%= max_rank[:max_rank].value %>
-      </div>
-      <div>
-        Source: <%= max_rank[:max_rank].source %>
-      </div>
-      <div id="<%= max_rank[:max_rank].id %>">
-        <div class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-          upvote (<span class="count"><%= max_rank[:upvotes] %></span>)
-        </div>
-        <div class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
-          downvote (<span class="count"><%= max_rank[:downvotes] %></span>)
-        </div>
-        <div>
-          Difference: <%= max_rank[:upvotes] - max_rank[:downvotes] %>
-        </div>
-        <% if admin_user_signed_in? %>
-        <div>
-          <% if max_rank[:max_rank].verified %>
-          <%= link_to 'Unverify', unverify_max_rank_path(max_rank[:max_rank].id) %>
-          <% else %>
-          <%= link_to 'Verify', verify_max_rank_path(max_rank[:max_rank].id) %>
-          <% end %>
-        </div>
-        <% end %>
-      </div>
+      <%= render partial: 'games/max_rank_panel', locals: { max_rank: max_rank } %>
       <% end %>
+    </div>
+    <% end %>
+    <% else %>
+    <div role="alert" class="alert alert-warning">
+      <h4>There are no max ranks!</h4>
+      <p>
+        Help us out by submitting a new max rank for this game.  You can do that by clicking the green button and filling out the form.
+      </p>
     </div>
     <% end %>
   </div>

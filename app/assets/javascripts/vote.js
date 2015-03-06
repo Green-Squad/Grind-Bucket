@@ -1,24 +1,38 @@
 $(function() {
     function switchVote(_this, maxRankId) {
-        var count = $('.count', _this);
-        var newCount = count.text() * 1 + 1;
-        count.text(newCount);
+        var count = $('.vote', _this);
+        var newCount = count.attr('data-original-title') * 1 + 1;
+        count.attr('data-original-title', newCount);
         if (_this.attr('class') == 'downvote') {
             var opposite = 'upvote';
+            $('.vote', '#' + maxRankId + ' .' + opposite).removeClass('upvoted')
+            $('.vote', _this).addClass('downvoted')
         } else {
             var opposite = 'downvote';
+            $('.vote', '#' + maxRankId + ' .' + opposite).removeClass('downvoted')
+            $('.vote', _this).addClass('upvoted')
         }
-        var oppositeCount = $('.count', '#' + maxRankId + ' .' + opposite);
-        var newOppositeCount = oppositeCount.text() * 1 - 1;
-        oppositeCount.text(newOppositeCount);
+        var oppositeCount = $('.vote', '#' + maxRankId + ' .' + opposite);
+        var newOppositeCount = oppositeCount.attr('data-original-title') * 1 - 1;
+        oppositeCount.attr('data-original-title', newOppositeCount);
     }
 
     function incrementVote(_this) {
        changeVote(_this, 1)
+       if (_this.attr('class') == 'downvote') {
+          $('.vote', _this).addClass('downvoted')
+       } else {
+          $('.vote', _this).addClass('upvoted')
+       }
     }
 
     function decrementVote(_this) {
         changeVote(_this, -1)
+        if (_this.attr('class') == 'downvote') {
+            $('.vote', _this).removeClass('downvoted')
+        } else {
+            $('.vote', _this).removeClass('upvoted')
+        }
     }
     
     function errorVote(_this) {
@@ -26,9 +40,9 @@ $(function() {
     }
     
     function changeVote(_this, vote) {
-       var count = $('.count', _this);
-       var newCount = count.text() * 1 + vote;
-       count.text(newCount);
+       var count = $('.vote', _this);
+       var newCount = count.attr('data-original-title') * 1 + vote;
+       count.attr('data-original-title', newCount);
     }
     
     function vote(_this, vote) {
@@ -68,3 +82,4 @@ $(function() {
       vote($(this), -1)
     });
 });
+

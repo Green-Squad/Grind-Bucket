@@ -67,6 +67,7 @@ $(function(){
 	********************************/
 	if( $.isFunction($.fn.tooltip) ){
 	$('.tooltip-btn').tooltip()
+	$('[data-toggle="tooltip"]').tooltip()
 	}
 	
 	

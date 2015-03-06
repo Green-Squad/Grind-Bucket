@@ -12,6 +12,10 @@
   overflow: hidden;
 }
 
+.no-padding {
+  padding: 0 !important;
+}
+
 .alert-error{color:#a94442;background-color:#f2dede;border-color:#ebccd1}
 .alert-error hr{border-top-color:#e4b9c0}
 .alert-error .alert-link{color:#843534}
@@ -115,4 +119,143 @@
 
 #add-game-box, #cancel-add-game-button, #add-max-rank-box, #cancel-add-max-rank-button {
   display: none;
+}
+
+/* Max Rank Buttons */
+.slim-panel-body {
+  padding: 10px 15px !important;
+}
+
+.max-rank-panel, .max-rank-icon {
+  border-radius: 50px;
+}
+
+.center-nav-icons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 50px;
+}
+
+.max-rank-icon {
+  width: 40px;
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+  z-index: 1;
+  color: #fff;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.nav-icon {
+  font-size: 18px;
+  border: 1px solid #d3d3db;
+  border-radius: 50px;
+  height: 34px;
+  width: 34px;
+  text-align: center;
+  display: block;
+  padding: 4px;
+}
+
+.upvote, .downvote, .admin {
+  cursor: pointer;
+}
+
+.upvoted {
+  color: #5cb85c !important;
+  border-color: #4cae4c !important;
+  background-color: #EAFFEA !important;
+}
+
+.downvoted {
+  color: #d9534f !important;
+  border-color: #d43f3a !important;
+  background-color: #FFE8E7 !important;
+}
+
+.max-rank-text {
+  height: 50px;
+  font-size: 20px;
+}
+
+.dropdown-menu.arrow.panel-default:after {
+  border-bottom-color: #fff !important;
+}
+
+.nav-toolbar > li:first-child {
+  margin-left: 0;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: $screen-sm-min) { 
+ .max-rank-text {
+    height: 50px;
+    font-size: 24px;
+    padding-left: 3px;
+  }
+  
+  .max-rank-icon {
+    width: 50px;
+    padding: 12.5px;
+    font-size: 24px;
+    height: 50px;
+  }
+  
+  .center-nav-icons {
+    height: 50px;
+  }
+  
+  .slim-panel-body {
+    padding: 10px 26px 10px 10px !important;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+  .max-rank-text {
+    height: 65px;
+    font-size: 28px;
+    padding-left: 7px;
+  }
+  
+  .max-rank-icon {
+    width: 65px;
+    padding: 19px;
+    font-size: 28px;
+    height: 65px;
+  }
+  
+  .center-nav-icons {
+    height: 65px;
+  }
+  
+  .slim-panel-body {
+    padding: 10px 37px 10px 10px !important;
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: $screen-lg-min) {
+  .max-rank-text {
+    height: 80px;
+    font-size: 30px;
+    padding-left: 10px;
+  }
+  
+  .max-rank-icon {
+    width: 80px;
+    padding: 20px;
+    font-size: 40px;
+    height: 80px;
+  }
+  
+  .center-nav-icons {
+    height: 80px;
+  }
+  
+  .slim-panel-body {
+    padding: 10px 50px 10px 10px !important;
+  }
 }

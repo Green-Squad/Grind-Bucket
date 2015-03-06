@@ -1,0 +1,85 @@
+<div class="panel panel-default max-rank-panel rounded">
+  <div class="panel-body slim-panel-body">
+    <div class="pull-left small-padding">
+      <div class="pull-left center-nav-icons">
+        <% if max_rank[:max_rank].verified %>
+        <i class="fa fa-check bg-success max-rank-icon" data-toggle="tooltip" data-placement="auto" title="" data-original-title="Verified"></i>
+        <% elsif max_rank[:upvotes] - max_rank[:downvotes] < 0 %>
+        <i class="fa fa-remove bg-danger max-rank-icon" data-toggle="tooltip" data-placement="auto" title="" data-original-title="Unlikely"></i>
+        <% else %>
+        <i class="fa fa-question bg-primary max-rank-icon" data-toggle="tooltip" data-placement="auto" title="" data-original-title="Not Verified"></i>
+        <% end %>
+      </div>
+      <div class="pull-right display-table">
+        <span class="max-rank-text cell"> <%= "#{max_rank[:max_rank].rank_type.name.pluralize}: #{max_rank[:max_rank].value}" %> </span>
+      </div>
+    </div>
+    <div class="pull-right center-nav-icons">
+      <ul id="<%= max_rank[:max_rank].id %>" class="nav-toolbar no-padding">
+        <li class="upvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+          <span class="vote nav-icon<%= ' upvoted' if @votes_hash[max_rank[:max_rank].id] == 1 %>" data-toggle="tooltip" data-placement="auto" title="" data-original-title="<%= max_rank[:upvotes] %>"><i class="fa fa-angle-up"></i></span>
+        </li>
+        <li class="downvote" data-max-rank-id="<%= max_rank[:max_rank].id %>">
+          <span class="vote nav-icon<%= ' downvoted' if @votes_hash[max_rank[:max_rank].id] == -1 %>" data-toggle="tooltip" data-placement="auto" title="" data-original-title="<%= max_rank[:downvotes] %>"><i class="fa fa-angle-down"></i></span>
+        </li>
+        <li class="dropdown">
+          <span class="nav-icon admin" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></span>
+          <div class="dropdown-menu lg pull-right arrow panel panel-default arrow-top-right">
+            <div class="panel-body text-center">
+              <div class="row">
+                <div class="col-xs-6 col-sm-4 text-orange">
+                  <span class="h2"><i class="fa fa-clock-o" data-toggle="tooltip" data-placement="auto" title="" data-original-title="<%= max_rank[:max_rank].created_at %>"></i></span>
+                  <p class="no-margn">
+                    <%= time_ago_in_words(max_rank[:max_rank].created_at) %> ago
+                  </p>
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                  <a href="<%= max_rank[:max_rank].source %>" class="text-blue" target="_blank"><span class="h2"><i class="fa fa-link"></i></span>
+                  <p class="no-margn">
+                    Source
+                  </p></a>
+                </div>
+                <% if admin_user_signed_in? %>
+                <div class="col-xs-12 visible-xs-block">
+                  <hr>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 hidden-xs">
+                  <hr>
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                  <% if max_rank[:max_rank].verified %>
+                  <a href="<%= unverify_max_rank_path(max_rank[:max_rank].id) %>" class="text-green"><span class="h2"> <i class="fa fa-minus-square-o"></i></span>
+                  <p class="no-margn">
+                    Unverify
+                  </p></a>
+                  <% else %>
+                  <a href="<%= verify_max_rank_path(max_rank[:max_rank].id) %>" class="text-green"><span class="h2"> <i class="fa fa-plus-square-o"></i></span>
+                  <p class="no-margn">
+                    Verify
+                  </p></a>
+                  <% end %>
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                  <a href="#" class="text-purple"><span class="h2"><i class="fa fa-edit"></i></span>
+                  <p class="no-margn">
+                    Edit
+                  </p></a>
+                </div>
+                <div class="col-xs-12 visible-xs-block">
+                  <hr>
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                  <a href="#" class="text-red"><span class="h2"><i class="fa fa-remove"></i></span>
+                  <p class="no-margn">
+                    Delete
+                  </p></a>
+                </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
