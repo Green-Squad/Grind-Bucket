@@ -263,3 +263,24 @@
     padding: 10px 50px 10px 10px !important;
   }
 }
+
+$search-box-placeholder-color: #c4c4cd;
+/* Didn't work when all in one line. */
+#search-box {
+  color: #333333;
+  &::-webkit-input-placeholder {
+    color: $search-box-placeholder-color;
+  }
+
+  &:-moz-placeholder {
+    color: $search-box-placeholder-color;
+  }
+
+  &::-moz-placeholder  {
+    color: $search-box-placeholder-color;
+  }
+
+  &:-ms-input-placeholder {
+    color: $search-box-placeholder-color;
+  }
+}
