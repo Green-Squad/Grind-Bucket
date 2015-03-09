@@ -10,35 +10,35 @@ class GamesController < ApplicationController
   def show
     unverified_max_ranks = MaxRank.where(game_id: @game.id, verified: false)
     verified_max_ranks = MaxRank.where(game_id: @game.id, verified: true)
-    
+
     @unverified_max_ranks_array = unverified_max_ranks.map do |max_rank|
       rank_info = {
-        max_rank: max_rank,
-        upvotes: max_rank.upvotes,
-        downvotes: max_rank.downvotes
+          max_rank: max_rank,
+          upvotes: max_rank.upvotes,
+          downvotes: max_rank.downvotes
       }
     end
-    
+
     @verified_max_ranks_array = verified_max_ranks.map do |max_rank|
       rank_info = {
-        max_rank: max_rank,
-        upvotes: max_rank.upvotes,
-        downvotes: max_rank.downvotes
+          max_rank: max_rank,
+          upvotes: max_rank.upvotes,
+          downvotes: max_rank.downvotes
       }
     end
-    
+
     @unverified_max_ranks_array = MaxRank.sort(@unverified_max_ranks_array)
     @verified_max_ranks_array = MaxRank.sort(@verified_max_ranks_array)
-    
+
     votes = Vote.joins(:max_rank).where('votes.user_id = ? AND max_ranks.game_id = ?', current_user.id, @game.id)
-    
+
     @votes_hash = {}
     votes.each do |vote|
       @votes_hash[vote.max_rank_id] = vote.vote
     end
     @votes_hash
   end
-  
+
   def create
     @game = Game.new(game_params)
     if @game.save
@@ -88,6 +88,6 @@ class GamesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_params
-    params.require(:game).permit(:name, :theme_id)
+    params.require(:game).permit(:name, :theme_id, :image)
   end
 end

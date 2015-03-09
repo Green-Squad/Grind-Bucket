@@ -1,11 +1,11 @@
 <% provide(:header, @game.name) %>
 <% provide(:small_header, '') %>
-<% provide(:game_image, '') %>
+<% provide(:game_image, @game.image) %>
 <% provide(:theme, @game.theme.name) %>
 
 <div class="row">
   <% if admin_user_signed_in? %>
-    <%= form_for(@game, url: edit_game_path(@game.id)) do |f| %>
+    <%= form_for(@game, url: edit_game_path(@game.id), multipart: true) do |f| %>
       <div class="form-group">
         <%= f.select :theme_id, {}, {}, {id: 'theme-select2'} do %>
           <% Theme.all.each do |theme| %>
@@ -13,6 +13,9 @@
             <%= content_tag(:option, theme.name, {selected:  selected, value: theme.id, data: {'primary-color': theme.primary_color, 'secondary-color': theme.secondary_color }}) %>
           <% end %>
         <% end %>
+      </div>
+      <div class="form-group">
+        <%= f.file_field :image %>
       </div>
       <div class="form-group">
         <%= f.submit 'Submit', class: 'btn btn-primary' %>

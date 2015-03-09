@@ -4,4 +4,19 @@ $(function () {
         $('body').removeClass();
         $('body').addClass(themeText);
     });
+
+    function changeImage(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.game-image').css('background-image', 'url(' + e.target.result + ')');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#game_image").change(function () {
+        changeImage(this);
+    });
 });

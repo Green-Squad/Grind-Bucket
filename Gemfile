@@ -4,6 +4,7 @@ gem 'activeadmin',              github: 'activeadmin'
 gem 'devise'
 
 gem 'bundler'
+gem 'carrierwave'
 gem 'coffee-rails'        
 gem 'friendly_id'     
 gem 'jbuilder'   

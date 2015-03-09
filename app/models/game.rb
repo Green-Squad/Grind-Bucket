@@ -9,6 +9,7 @@ class Game < ActiveRecord::Base
 
   paginates_per 25
   friendly_id :slug_candidates, use: [:slugged, :finders]
+  mount_uploader :image, GameImageUploader
   
   def approve
     self.status = 'Approved'
