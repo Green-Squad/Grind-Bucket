@@ -338,3 +338,22 @@ $search-box-placeholder-color: #c4c4cd;
 .admin-toggle-closed {
   right: 0;
 }
+
+.scrollup{
+  width:40px;
+  height:40px;
+  opacity:0.3;
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  display:none;
+  background-color: #000;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  color: #fff;
+
+  &:hover {
+    color: #fff;
+  }
+}
