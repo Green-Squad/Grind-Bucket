@@ -161,4 +161,21 @@ describe Game, type: :model do
     end
   end
 
+  describe '.set_theme' do
+    before(:all) do
+      FactoryGirl.create(:theme, name: 'default')
+    end
+
+    it 'sets a default theme if no theme is defined' do
+      game = Game.create(name: 'failure game')
+      expect(game.theme.name).to eq('default')
+    end
+
+    it 'does not set a default theme if one is already defined' do
+      theme = FactoryGirl.create(:theme)
+      game = Game.create(name: 'failure game', theme_id: theme.id)
+      expect(game.theme.name).to_not eq('default')
+    end
+  end
+
 end

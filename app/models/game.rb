@@ -4,6 +4,7 @@ class Game < ActiveRecord::Base
   belongs_to :theme
 
   validates :name, presence: true
+  before_create :set_theme
   after_create :fix_slug
 
   paginates_per 25
@@ -18,7 +19,6 @@ class Game < ActiveRecord::Base
     self.status = 'Rejected'
     save
   end
-  
 
   def slug_candidates
     [
@@ -26,8 +26,6 @@ class Game < ActiveRecord::Base
       [:name, :id]
     ]
   end
-  
-  
   
   def self.getJSON
     game_platforms = [ 'ps4', 'xboxone', 'ps3', 'xbox360', 'pc', 'wii-u' ]
@@ -65,6 +63,10 @@ class Game < ActiveRecord::Base
   end
   
   private
+
+  def set_theme
+    self.theme_id = Theme.where(name: 'default').first.id unless theme_id
+  end
   
   def fix_slug
     self.slug = nil
