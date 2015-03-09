@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302155735) do
+ActiveRecord::Schema.define(version: 20150309132137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,15 +64,16 @@ ActiveRecord::Schema.define(version: 20150302155735) do
 
   create_table "games", force: :cascade do |t|
     t.string   "name"
-    t.string   "theme"
     t.string   "image"
     t.string   "status",     default: "Pending"
     t.string   "slug"
+    t.integer  "theme_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "games", ["slug"], name: "index_games_on_slug", unique: true, using: :btree
+  add_index "games", ["theme_id"], name: "index_games_on_theme_id", using: :btree
 
   create_table "identifiers", force: :cascade do |t|
     t.string   "fingerprint"
@@ -103,6 +104,17 @@ ActiveRecord::Schema.define(version: 20150302155735) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "themes", force: :cascade do |t|
+    t.string   "name"
+    t.string   "primary_color"
+    t.string   "secondary_color"
+    t.string   "panel_text_color"
+    t.string   "nav_link_color"
+    t.string   "nav_link_hover_color"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "users", force: :cascade do |t|

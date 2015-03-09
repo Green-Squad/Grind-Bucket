@@ -1,5 +1,5 @@
 ActiveAdmin.register Game do
-  permit_params :name, :theme, :image
+  permit_params :name, :theme_id, :image
 
 
   # See permitted parameters documentation:

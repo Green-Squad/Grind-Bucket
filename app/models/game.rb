@@ -1,13 +1,15 @@
 class Game < ActiveRecord::Base
   extend FriendlyId
   require 'open-uri'
-  paginates_per 25
+  belongs_to :theme
+
   validates :name, presence: true
+  after_create :fix_slug
+
+  paginates_per 25
   friendly_id :slug_candidates, use: [:slugged, :finders]
   
-  after_create :fix_slug
-  
-  def approve 
+  def approve
     self.status = 'Approved'
     save
   end

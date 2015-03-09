@@ -49,3 +49,6 @@ bower.json
 /public/assets
 
 /.idea
+
+# Ignore generated themes
+/app/assets/stylesheets/required/themes/*.scss
