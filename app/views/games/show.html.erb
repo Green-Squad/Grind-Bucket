@@ -4,6 +4,22 @@
 <% provide(:theme, @game.theme.name) %>
 
 <div class="row">
+  <% if admin_user_signed_in? %>
+    <%= form_for(@game, url: edit_game_path(@game.id)) do |f| %>
+      <div class="form-group">
+        <%= f.select :theme_id, {}, {}, {id: 'theme-select2'} do %>
+          <% Theme.all.each do |theme| %>
+            <% selected = theme.id == @game.theme_id ? true : false %>
+            <%= content_tag(:option, theme.name, {selected:  selected, value: theme.id, data: {'primary-color': theme.primary_color, 'secondary-color': theme.secondary_color }}) %>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="form-group">
+        <%= f.submit 'Submit', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+
+  <% end %>
   <div class="col-lg-5 col-lg-push-7 col-md-3 col-md-push-9" id="button-col">
     <button id="add-max-rank-button" class="btn btn-success">
       Add Max Rank
@@ -18,38 +34,40 @@
     </div>
 
     <% if @verified_max_ranks_array.count > 0 || @unverified_max_ranks_array.count > 0 %>
-    <% @verified_max_ranks_array.each_with_index do |max_rank| %>
-    <%= render partial: 'games/max_rank_panel', locals: { max_rank: max_rank } %>
-    <% end %>
-
-    <% threshold = nil %>
-
-    <% @unverified_max_ranks_array.each_with_index do |max_rank, i| %>
-    <% if max_rank[:upvotes] - max_rank[:downvotes] < 0 || i >= 10
-        threshold = i
-      break
-      end %>
-    <%= render partial: 'games/max_rank_panel', locals: { max_rank: max_rank } %>
-    <% end %>
-
-    <% if threshold %>
-    <button id="threshold-button" class="btn btn-default">
-      Show ranks below the threshold
-    </button>
-    <hr class="clear">
-    <div id="threshold">
-      <% @unverified_max_ranks_array[threshold, @unverified_max_ranks_array.count - threshold].each_with_index do |max_rank, i| %>
-      <%= render partial: 'games/max_rank_panel', locals: { max_rank: max_rank } %>
+      <% @verified_max_ranks_array.each_with_index do |max_rank| %>
+        <%= render partial: 'games/max_rank_panel', locals: {max_rank: max_rank} %>
       <% end %>
-    </div>
-    <% end %>
+
+      <% threshold = nil %>
+
+      <% @unverified_max_ranks_array.each_with_index do |max_rank, i| %>
+        <% if max_rank[:upvotes] - max_rank[:downvotes] < 0 || i >= 10
+             threshold = i
+             break
+           end %>
+        <%= render partial: 'games/max_rank_panel', locals: {max_rank: max_rank} %>
+      <% end %>
+
+      <% if threshold %>
+        <button id="threshold-button" class="btn btn-default">
+          Show ranks below the threshold
+        </button>
+        <hr class="clear">
+        <div id="threshold">
+          <% @unverified_max_ranks_array[threshold, @unverified_max_ranks_array.count - threshold].each_with_index do |max_rank, i| %>
+            <%= render partial: 'games/max_rank_panel', locals: {max_rank: max_rank} %>
+          <% end %>
+        </div>
+      <% end %>
     <% else %>
-    <div role="alert" class="alert alert-warning">
-      <h4>There are no max ranks!</h4>
-      <p>
-        Help us out by submitting a new max rank for this game.  You can do that by clicking the green button and filling out the form.
-      </p>
-    </div>
+      <div role="alert" class="alert alert-warning">
+        <h4>There are no max ranks!</h4>
+
+        <p>
+          Help us out by submitting a new max rank for this game. You can do that by clicking the green button and
+          filling out the form.
+        </p>
+      </div>
     <% end %>
   </div>
 </div>

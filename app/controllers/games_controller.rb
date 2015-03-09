@@ -1,13 +1,12 @@
 class GamesController < ApplicationController
-  before_action :authenticate_admin_user!, only: [:approve, :reject]
-  before_action :set_game, only: :show
+  before_action :authenticate_admin_user!, only: [:approve, :reject, :update]
+  before_action :set_game, only: [:show, :update]
   before_action :validate_recaptcha, only: :create
 
   def index
     @games = Game.where(status: "Approved").order(:name).page params[:page]
   end
 
-  
   def show
     unverified_max_ranks = MaxRank.where(game_id: @game.id, verified: false)
     verified_max_ranks = MaxRank.where(game_id: @game.id, verified: true)
@@ -50,6 +49,15 @@ class GamesController < ApplicationController
     redirect_to session[:previous_url] || root_url
   end
 
+  def update
+    if @game.update_attributes(game_params)
+      flash[:success] = "Successfully updated #{@game.name}."
+    else
+      flash[:error] = "Error updating #{@game.name}."
+    end
+    redirect_back
+  end
+
   def approve
     game = Game.find_by_id(params[:id])
     if game
@@ -80,6 +88,6 @@ class GamesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_params
-    params.require(:game).permit(:name)
+    params.require(:game).permit(:name, :theme_id)
   end
 end
