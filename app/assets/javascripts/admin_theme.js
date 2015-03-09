@@ -6,11 +6,11 @@ $(function () {
     });
 
     function changeImage(input) {
-
+        $('.game-header').removeClass('default-image').addClass('game-image');
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('.game-image').css('background-image', 'url(' + e.target.result + ')');
+                $('.game-header').css('background-image', 'url(' + e.target.result + ')');
             }
             reader.readAsDataURL(input.files[0]);
         }
@@ -23,6 +23,5 @@ $(function () {
     $('.admin-toggle').click(function() {
         $('.admin-menu').toggleClass('admin-menu-closed');
         $('.admin-toggle').toggleClass('admin-toggle-closed');
-        console.log('asdf')
     });
 });
