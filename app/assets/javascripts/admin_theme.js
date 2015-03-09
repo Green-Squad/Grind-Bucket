@@ -16,7 +16,13 @@ $(function () {
         }
     }
 
-    $("#game_image").change(function () {
+    $('#game_image').change(function () {
         changeImage(this);
+    });
+
+    $('.admin-toggle').click(function() {
+        $('.admin-menu').toggleClass('admin-menu-closed');
+        $('.admin-toggle').toggleClass('admin-toggle-closed');
+        console.log('asdf')
     });
 });

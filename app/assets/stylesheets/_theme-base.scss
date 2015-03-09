@@ -48,3 +48,13 @@ html.turbolinks-progress-bar::before {
   background-color: $primary-color;
   color: $secondary-color;
 }
+
+.admin-menu .panel-heading {
+  background-color: $primary-color;
+  color:  $panel-text-color;
+}
+
+.admin-toggle {
+  background-color: lighten($primary-color, 15%);
+  color:  $panel-text-color;
+}

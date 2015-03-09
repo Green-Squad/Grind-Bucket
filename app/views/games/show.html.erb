@@ -4,25 +4,8 @@
 <% provide(:theme, @game.theme.name) %>
 
 <div class="row">
-  <% if admin_user_signed_in? %>
-    <%= form_for(@game, url: edit_game_path(@game.id), multipart: true) do |f| %>
-      <div class="form-group">
-        <%= f.select :theme_id, {}, {}, {id: 'theme-select2'} do %>
-          <% Theme.all.each do |theme| %>
-            <% selected = theme.id == @game.theme_id ? true : false %>
-            <%= content_tag(:option, theme.name, {selected:  selected, value: theme.id, data: {'primary-color': theme.primary_color, 'secondary-color': theme.secondary_color }}) %>
-          <% end %>
-        <% end %>
-      </div>
-      <div class="form-group">
-        <%= f.file_field :image %>
-      </div>
-      <div class="form-group">
-        <%= f.submit 'Submit', class: 'btn btn-primary' %>
-      </div>
-    <% end %>
 
-  <% end %>
+  <%= render partial: 'games/admin_menu' %>
   <div class="col-lg-5 col-lg-push-7 col-md-3 col-md-push-9" id="button-col">
     <button id="add-max-rank-button" class="btn btn-success">
       Add Max Rank
@@ -73,4 +56,4 @@
       </div>
     <% end %>
   </div>
-</div>
+  </div>

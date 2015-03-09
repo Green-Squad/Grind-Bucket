@@ -16,9 +16,19 @@
   padding: 0 !important;
 }
 
-.alert-error{color:#a94442;background-color:#f2dede;border-color:#ebccd1}
-.alert-error hr{border-top-color:#e4b9c0}
-.alert-error .alert-link{color:#843534}
+.alert-error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1
+}
+
+.alert-error hr {
+  border-top-color: #e4b9c0
+}
+
+.alert-error .alert-link {
+  color: #843534
+}
 
 .brand {
   font-size: 20px;
@@ -27,7 +37,7 @@
 }
 
 .left-panel, .content {
-   -webkit-transition: 0.3s all;
+  -webkit-transition: 0.3s all;
   -moz-transition: 0.3s all;
   -o-transition: 0.3s all;
   -ms-transition: 0.3s all;
@@ -70,12 +80,12 @@
   font-size: 26px;
   display: table-cell;
   vertical-align: middle;
-      line-height: 1.5em;
+  line-height: 1.5em;
 }
 
 .game-header h1 span {
   padding: 5px;
-    /* Needs prefixing */
+  /* Needs prefixing */
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   -moz-box-decoration-break: clone;
@@ -83,7 +93,7 @@
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: $screen-sm-min) {
- .game-header h1 {
+  .game-header h1 {
     font-size: 30px;
 
   }
@@ -117,8 +127,9 @@
     padding: 10px;
   }
 }
+
 #button-col {
-  margin:0 0 10px 0;
+  margin: 0 0 10px 0;
 }
 
 /* Max Rank Buttons */
@@ -189,24 +200,24 @@
 }
 
 /* Small devices (tablets, 768px and up) */
-@media (min-width: $screen-sm-min) { 
- .max-rank-text {
+@media (min-width: $screen-sm-min) {
+  .max-rank-text {
     height: 50px;
     font-size: 24px;
     padding-left: 3px;
   }
-  
+
   .max-rank-icon {
     width: 50px;
     padding: 12.5px;
     font-size: 24px;
     height: 50px;
   }
-  
+
   .center-nav-icons {
     height: 50px;
   }
-  
+
   .slim-panel-body {
     padding: 10px 26px 10px 10px !important;
   }
@@ -219,18 +230,18 @@
     font-size: 28px;
     padding-left: 7px;
   }
-  
+
   .max-rank-icon {
     width: 65px;
     padding: 19px;
     font-size: 28px;
     height: 65px;
   }
-  
+
   .center-nav-icons {
     height: 65px;
   }
-  
+
   .slim-panel-body {
     padding: 10px 37px 10px 10px !important;
   }
@@ -243,18 +254,18 @@
     font-size: 30px;
     padding-left: 10px;
   }
-  
+
   .max-rank-icon {
     width: 80px;
     padding: 20px;
     font-size: 40px;
     height: 80px;
   }
-  
+
   .center-nav-icons {
     height: 80px;
   }
-  
+
   .slim-panel-body {
     padding: 10px 50px 10px 10px !important;
   }
@@ -272,11 +283,58 @@ $search-box-placeholder-color: #c4c4cd;
     color: $search-box-placeholder-color;
   }
 
-  &::-moz-placeholder  {
+  &::-moz-placeholder {
     color: $search-box-placeholder-color;
   }
 
   &:-ms-input-placeholder {
     color: $search-box-placeholder-color;
   }
+}
+
+.admin-menu {
+  width: 300px;
+  position: fixed;
+  right: 0;
+  top: 220px;
+  z-index: 1000;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
+  -o-transition: 0.3s all;
+  -ms-transition: 0.3s all;
+  transition: 0.3s all;
+}
+
+.admin-menu .panel-heading {
+  border-radius: 0;
+}
+
+.admin-menu .panel {
+  border-top: none;
+}
+
+.admin-menu-closed {
+  right: -300px;
+}
+
+.admin-toggle {
+  width: 40px;
+  height: 40px;
+  line-height:40px;
+  position: fixed;
+  right: 299px;
+  top: 220px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 1001;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
+  -o-transition: 0.3s all;
+  -ms-transition: 0.3s all;
+  transition: 0.3s all;
+}
+
+.admin-toggle-closed {
+  right: 0;
 }

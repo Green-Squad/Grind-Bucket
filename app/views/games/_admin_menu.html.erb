@@ -1,0 +1,26 @@
+<% if admin_user_signed_in? %>
+  <div class="admin-toggle admin-toggle-closed"><i class="fa fa-bars"></i></div>
+  <div class="admin-menu admin-menu-closed">
+    <div class="panel panel-default">
+      <div class="panel-heading">Admin</div>
+      <div class="panel-body">
+      <%= form_for(@game, url: edit_game_path(@game.id), multipart: true) do |f| %>
+        <div class="form-group">
+          <%= f.select :theme_id, {}, {}, {id: 'theme-select2'} do %>
+            <% Theme.all.each do |theme| %>
+              <% selected = theme.id == @game.theme_id ? true : false %>
+              <%= content_tag(:option, theme.name, {selected: selected, value: theme.id, data: {'primary-color': theme.primary_color, 'secondary-color': theme.secondary_color }}) %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="form-group">
+          <%= f.file_field :image %>
+        </div>
+        <div class="form-group">
+          <%= f.submit 'Submit', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
