@@ -1,33 +1,35 @@
+<% provide(:title, 'Search Results') %>
+<% provide(:description, "Results found for: #{@google_request['queries']['request'][0]['searchTerms']}") %>
 <%= provide(:header, 'Search') %>
 
-<ul class="nav nav-tabs" role="tablist">
-  <li role="presentation" class="active">
-    <a href="#all" role="tab" data-toggle="tab">
-      <span class="badge bg-success"><%= @total_results %></span>
-      Results found for: <strong><%= @google_request["queries"]["request"][0]["searchTerms"] %></strong>
+<ul class='nav nav-tabs' role='tablist'>
+  <li role='presentation' class='active'>
+    <a href='#all' role='tab' data-toggle='tab'>
+      <span class='badge bg-success'><%= @total_results %></span>
+      Results found for: <strong><%= @google_request['queries']['request'][0]['searchTerms'] %></strong>
     </a>
   </li>
 </ul>
 
 <% if(@total_results > 0) %>
-<div class="tab-content">
-  <div role="tabpanel" class="panel panel-default tab-pane tabs-up active" id="all">
-    <div class="panel-body">
-    <% @google_request["items"].each do |item| %>
-      <h4 class="text-purple"><%= link_to item["title"], item["link"] %></h4>
+<div class='tab-content'>
+  <div role='tabpanel' class='panel panel-default tab-pane tabs-up active' id='all'>
+    <div class='panel-body'>
+    <% @google_request['items'].each do |item| %>
+      <h4 class='text-purple'><%= link_to item['title'], item['link'] %></h4>
       <p>
-        <%= item["snippet"] %>
+        <%= item['snippet'] %>
       </p>
-      <span class="label label-default bg-gray"><%= item["link"] %></span>
+      <span class='label label-default bg-gray'><%= item['link'] %></span>
       <hr>
     <% end %>
     </div>
   </div>
 </div>
 <% else %>
-<div class="tab-content">
-  <div role="tabpanel" class="panel panel-default tab-pane tabs-up active" id="all">
-    <div class="panel-body">
+<div class='tab-content'>
+  <div role='tabpanel' class='panel panel-default tab-pane tabs-up active' id='all'>
+    <div class='panel-body'>
       <h3>There are no search results.</h3>
     </div>
   </div>
