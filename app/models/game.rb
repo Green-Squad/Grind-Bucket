@@ -2,6 +2,8 @@ class Game < ActiveRecord::Base
   extend FriendlyId
   require 'open-uri'
   belongs_to :theme
+  has_many :max_rank
+  has_many :vote, through: :max_rank
 
   validates :name, presence: true
   before_create :set_theme

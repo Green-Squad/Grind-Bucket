@@ -2,6 +2,7 @@ class MaxRank < ActiveRecord::Base
   belongs_to :game
   belongs_to :rank_type
   belongs_to :user
+  has_many :vote
   
   validates :source, presence: true
   validates :user, presence: true
