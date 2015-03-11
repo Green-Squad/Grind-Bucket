@@ -1,12 +1,14 @@
 class Vote < ActiveRecord::Base
   belongs_to :user
-  belongs_to :max_rank
+  belongs_to :max_rank, touch: true
 
   validates :vote, presence: true, inclusion: { in: [-1, 1] }
   validates :max_rank, presence: true
   validates :user, presence: true
 
   before_save :verify
+
+  private
 
   def verify
     if self.id

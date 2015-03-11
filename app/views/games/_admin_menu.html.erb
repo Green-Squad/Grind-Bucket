@@ -9,7 +9,7 @@
           <%= f.select :theme_id, {}, {}, {id: 'theme-select2'} do %>
             <% Theme.all.each do |theme| %>
               <% selected = theme.id == @game.theme_id ? true : false %>
-              <%= content_tag(:option, theme.name, {selected: selected, value: theme.id, data: {'primary-color': theme.primary_color, 'secondary-color': theme.secondary_color }}) %>
+              <%= content_tag(:option, theme.name, {selected: selected, value: theme.id, data: {'primary-color' => theme.primary_color, 'secondary-color' => theme.secondary_color }}) %>
             <% end %>
           <% end %>
         </div>

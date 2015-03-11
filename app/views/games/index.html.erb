@@ -15,7 +15,7 @@
     </div>
     <div class="list-group">
       <% @games.each do |game| %>
-      <%= link_to game.name, game_path(game), class: 'list-group-item' %>
+        <%= link_to game.name, game_path(game), class: 'list-group-item' %>
       <% end %>
     </div>
     <%= paginate @games %>
