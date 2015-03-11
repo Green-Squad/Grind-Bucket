@@ -361,3 +361,7 @@ $search-box-placeholder-color: #c4c4cd;
 .alert h2 {
   margin-top: 0;
 }
+
+.warper {
+  min-height: calc(100vh - 260px) !important;
+}
