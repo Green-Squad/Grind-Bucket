@@ -17,37 +17,37 @@ describe SearchController, type: :controller do
     it 'redirects to game page' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
       get :search, { query: 'Halo 4' }, { fingerprint: '123456' }
-      expect(response).to redirect_to(game_url(game.id))
+      expect(response).to redirect_to(game_url(game.slug))
     end
     
     it 'redirects to game page with whitespaces' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
       get :search, { query: 'H a l o   4    ' }, { fingerprint: '123456' } 
-      expect(response).to redirect_to(game_url(game.id))
+      expect(response).to redirect_to(game_url(game.slug))
     end
     
     it 'redirects to game page with no whitespace' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
       get :search, { query: 'Halo4' }, { fingerprint: '123456' }
-      expect(response).to redirect_to(game_url(game.id))
+      expect(response).to redirect_to(game_url(game.slug))
     end
     
     it 'redirects to game page with incomplete title' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
       get :search, { query: 'Halo' }, { fingerprint: '123456' }
-      expect(response).to redirect_to(game_url(game.id))
+      expect(response).to redirect_to(game_url(game.slug))
     end
     
     it 'redirects to game page with different case' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Approved')
       get :search, { query: 'hALO 4' }, { fingerprint: '123456' }
-      expect(response).to redirect_to(game_url(game.id))
+      expect(response).to redirect_to(game_url(game.slug))
     end
     
     xit 'does not redirect to game page if it is pending' do
       game = FactoryGirl.create(:game, name: 'Halo 4', status: 'Pending')
        get :search, { query: 'Halo 4' }, { fingerprint: '123456' }
-      expect(response).to_not redirect_to(game_url(game.id))
+      expect(response).to_not redirect_to(game_url(game.slug))
     end
     
     xit 'redirects to search results page if no match is found' do

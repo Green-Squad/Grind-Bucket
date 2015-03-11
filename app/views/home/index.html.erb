@@ -49,7 +49,7 @@
           <div class="panel-heading">Recently Added</div>
           <div class="list-group">
             <% @recently_added.each do |game| %>
-              <a href="<%= game_path(game.id) %>" class="list-group-item"><%= game.name %></a>
+              <a href="<%= game_path(game.slug) %>" class="list-group-item"><%= game.name %></a>
             <% end %>
           </div>
         </div>
@@ -59,7 +59,7 @@
           <div class="panel-heading">Recent Activity</div>
           <div class="list-group">
             <% @recent_activity.each do |game| %>
-              <a href="<%= game_path(game.id) %>" class="list-group-item"><%= game.name %></a>
+              <a href="<%= game_path(game.slug) %>" class="list-group-item"><%= game.name %></a>
             <% end %>
           </div>
         </div>

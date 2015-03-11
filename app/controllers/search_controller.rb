@@ -5,7 +5,7 @@ class SearchController < ApplicationController
       search = params[:query].downcase.delete(' ')
       game = Game.where("LOWER(REPLACE(name, ' ', '')) LIKE ? AND status = 'Approved'", "#{search}%").order(:name).first
       if game
-        redirect_to game_url(game.id)
+        redirect_to game_url(game.slug)
       else
         begin
           @google_request = JSON.load(open(ENV['SEARCH_URL'] + params[:query]));
