@@ -1,17 +1,18 @@
 source 'https://rubygems.org'
 
-gem 'activeadmin',              github: 'activeadmin'
+gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
 
 gem 'bundler'
 gem 'carrierwave'
-gem 'coffee-rails'        
-gem 'friendly_id'     
-gem 'jbuilder'   
-gem 'jquery-turbolinks' 
-gem 'kaminari'          
+gem 'coffee-rails'
+gem 'exception_handler'
+gem 'friendly_id'
+gem 'jbuilder'
+gem 'jquery-turbolinks'
+gem 'kaminari'
 gem 'pg'
-gem 'rails',                    '~> 4.2.0'
+gem 'rails', '~> 4.2.0'
 gem 'random_username'
 gem 'sass'
 gem 'sass-rails'
@@ -26,7 +27,7 @@ group :development, :test do
   gem 'rspec-rails'
 end
 
-group :test do 
+group :test do
   gem 'factory_girl_rails'
   gem 'faker'
 end

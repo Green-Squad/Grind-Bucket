@@ -2,6 +2,7 @@ class GamesController < ApplicationController
   before_action :authenticate_admin_user!, only: [:approve, :reject, :update]
   before_action :set_game, only: [:show, :update]
   before_action :validate_recaptcha, only: :create
+  before_action :check_pending, only: :show
 
   def index
     @games = Game.where(status: "Approved").order(:name).page params[:page]
@@ -89,5 +90,11 @@ class GamesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_params
     params.require(:game).permit(:name, :theme_id, :image)
+  end
+
+  def check_pending
+    if @game.status == 'Pending'
+      raise ActionController::RoutingError.new('Not Found')
+    end
   end
 end

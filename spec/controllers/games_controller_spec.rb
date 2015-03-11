@@ -43,7 +43,7 @@ describe GamesController, type: :controller do
   describe 'GET #show' do
 
     before(:each) do
-      @game = FactoryGirl.create(:game)
+      @game = FactoryGirl.create(:game, status: 'Approved')
     end
 
     it 'responds successfully with an HTTP 200 status code' do
@@ -91,7 +91,10 @@ describe GamesController, type: :controller do
       expect(assigns(:verified_max_ranks_array).count).to eq(MaxRank.where(game_id: @game.id, verified: true).count)
     end
 
-
+    it 'does not show a pending game' do
+      @game = FactoryGirl.create(:game, status: 'Pending')
+      expect { get :show, {id: @game.id}, {fingerprint: '123456'} }.to raise_error(ActionController::RoutingError)
+    end
   end
 
 
@@ -141,7 +144,7 @@ describe GamesController, type: :controller do
       @game = FactoryGirl.create(:game)
       @theme = FactoryGirl.create(:theme)
     end
-    subject { patch :update, { id: @game.id, game: { theme_id: @theme.id } }, {fingerprint: '123456'} }
+    subject { patch :update, {id: @game.id, game: {theme_id: @theme.id}}, {fingerprint: '123456'} }
     context 'when admin logged in' do
       before(:all) do
         @admin = FactoryGirl.create(:admin_user)
