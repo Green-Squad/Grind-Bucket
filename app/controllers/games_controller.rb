@@ -2,6 +2,7 @@ class GamesController < ApplicationController
   before_action :authenticate_admin_user!, only: [:approve, :reject, :update]
   before_action :set_game, only: [:show, :update]
   before_action :validate_recaptcha, only: :create
+  before_action :check_pending, only: :show
 
   def index
     @games = Rails.cache.fetch("#{cache_key_all_games(params[:page])}", expires_in: 1.day) do
@@ -115,5 +116,11 @@ class GamesController < ApplicationController
     max_updated_at = Vote.joins(:max_rank).where('votes.user_id = ? AND max_ranks.game_id = ?', current_user.id, @game.id)
                          .maximum(:updated_at).try(:utc).try(:to_s, :number)
     "votes/#{current_user.id}-#{@game.id}-#{max_updated_at}"
+  end
+
+  def check_pending
+    if @game.status == 'Pending'
+      raise ActionController::RoutingError.new('Not Found')
+    end
   end
 end

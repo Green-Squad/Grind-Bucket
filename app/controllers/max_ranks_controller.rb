@@ -7,6 +7,7 @@ class MaxRanksController < ApplicationController
     @max_rank = MaxRank.new(max_rank_params)
     if @max_rank.save
       flash[:success] = "Successfully created #{@max_rank.rank_type.name} for #{@max_rank.game.name}."
+      Vote.create(max_rank_id: @max_rank.id, user_id: current_user.id, vote: 1)
     else
       flash[:error] = 'Error creating a max rank.'
     end

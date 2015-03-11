@@ -1,2 +1,4 @@
-<h1>Loading</h1>
+<% provide(:title, 'Loading') %>
+<% provide(:description, '') %>
+<%= provide(:header, 'Loading') %>
 <%= link_to 'Click here if it gets stuck.', session[:intended_url] || root_url, id: 'redirect_url' %>

@@ -34,6 +34,15 @@ RSpec.describe MaxRanksController, type: :controller do
         subject
         expect(flash[:success]).to be_present
       end
+
+      it 'should upvote created max rank' do
+        allow(controller).to receive(:validate_recaptcha)
+        user = FactoryGirl.create(:user)
+        sign_in user
+        subject
+        vote = Vote.where(max_rank_id: MaxRank.last.id, user_id: user.id, vote: 1).first
+        expect(vote).to_not be(nil)
+      end
     end
     context 'unsuccessful max rank creation' do
       
