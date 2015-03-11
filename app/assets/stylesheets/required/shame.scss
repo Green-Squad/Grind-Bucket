@@ -151,7 +151,7 @@
 .max-rank-icon {
   width: 40px;
   padding: 10px;
-  font-size: 20px;
+  font-size: 20px !important;
   text-align: center;
   z-index: 1;
   color: #fff;
@@ -210,7 +210,7 @@
   .max-rank-icon {
     width: 50px;
     padding: 12.5px;
-    font-size: 24px;
+    font-size: 24px !important;
     height: 50px;
   }
 
@@ -234,7 +234,7 @@
   .max-rank-icon {
     width: 65px;
     padding: 19px;
-    font-size: 28px;
+    font-size: 28px !important;
     height: 65px;
   }
 
@@ -258,7 +258,7 @@
   .max-rank-icon {
     width: 80px;
     padding: 20px;
-    font-size: 40px;
+    font-size: 40px !important;
     height: 80px;
   }
 
