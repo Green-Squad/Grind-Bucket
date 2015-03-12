@@ -3,15 +3,17 @@ class GamesController < ApplicationController
   before_action :set_game, only: [:show, :update]
   before_action :validate_recaptcha, only: :create
   before_action :check_pending, only: :show
+  after_action :clear_recently_added, only: [:approve, :reject]
+  after_action :clear_games_all, only: [:approve, :reject]
 
   def index
-    @games = Rails.cache.fetch("#{cache_key_all_games(params[:page])}", expires_in: 1.day) do
+    @games = Rails.cache.fetch("games/all-#{params[:page]}", expires_in: 1.day) do
       Kaminari.paginate_array(Game.where(status: 'Approved').order(:name).to_a).page(params[:page]).per(25)
     end
   end
 
   def show
-    @unverified_max_ranks_array = Rails.cache.fetch("#{cache_key_unverified_max_ranks}", expires_in: 1.day) do
+    @unverified_max_ranks_array = Rails.cache.fetch("max_ranks/unverified/#{@game.id}-#{@game.name}", expires_in: 1.day) do
       unverified_max_ranks = MaxRank.where(game_id: @game.id, verified: false)
       unverified_max_ranks_array = unverified_max_ranks.map do |max_rank|
         rank_info = {
@@ -23,7 +25,7 @@ class GamesController < ApplicationController
       MaxRank.sort(unverified_max_ranks_array)
     end
 
-    @verified_max_ranks_array = Rails.cache.fetch("#{cache_key_verified_max_ranks}", expires_in: 1.day) do
+    @verified_max_ranks_array = Rails.cache.fetch( "max_ranks/verified/#{@game.id}-#{@game.name}", expires_in: 1.day) do
       verified_max_ranks = MaxRank.where(game_id: @game.id, verified: true)
       verified_max_ranks_array = verified_max_ranks.map do |max_rank|
         rank_info = {
@@ -35,7 +37,7 @@ class GamesController < ApplicationController
       MaxRank.sort(verified_max_ranks_array)
     end
 
-    @votes_hash = Rails.cache.fetch("#{cache_key_user_votes}", expires_in: 1.day) do
+    @votes_hash = Rails.cache.fetch("votes/#{current_user.id}-#{@game.id}", expires_in: 1.day) do
       votes =Vote.joins(:max_rank).where('votes.user_id = ? AND max_ranks.game_id = ?', current_user.id, @game.id)
       votes_hash = {}
       votes.each do |vote|
@@ -97,30 +99,17 @@ class GamesController < ApplicationController
     params.require(:game).permit(:name, :theme_id, :image)
   end
 
-  def cache_key_all_games(page)
-    max_updated_at = Game.where(status: 'Approved').maximum(:updated_at).try(:utc).try(:to_s, :number)
-    "games/all-#{page}-#{max_updated_at}"
-  end
-
-  def cache_key_unverified_max_ranks
-    max_updated_at = MaxRank.where(game_id: @game.id).maximum(:updated_at).try(:utc).try(:to_s, :number)
-    "max_ranks/unverified/#{@game.id}-#{@game.name}-#{max_updated_at}"
-  end
-
-  def cache_key_verified_max_ranks
-    max_updated_at = MaxRank.where(game_id: @game.id).maximum(:updated_at).try(:utc).try(:to_s, :number)
-    "max_ranks/verified/#{@game.id}-#{@game.name}-#{max_updated_at}"
-  end
-
-  def cache_key_user_votes
-    max_updated_at = Vote.joins(:max_rank).where('votes.user_id = ? AND max_ranks.game_id = ?', current_user.id, @game.id)
-                         .maximum(:updated_at).try(:utc).try(:to_s, :number)
-    "votes/#{current_user.id}-#{@game.id}-#{max_updated_at}"
-  end
-
   def check_pending
     if @game.status == 'Pending'
       raise ActionController::RoutingError.new('Not Found')
     end
+  end
+
+  def clear_recently_added
+    Rails.cache.delete('home/recently-added')
+  end
+
+  def clear_games_all
+    Rails.cache.delete_matched('games/all-*')
   end
 end

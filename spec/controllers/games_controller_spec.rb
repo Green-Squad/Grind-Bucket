@@ -3,6 +3,7 @@ require 'rails_helper'
 describe GamesController, type: :controller do
 
   describe 'GET #index' do
+
     it 'responds successfully with an HTTP 200 status code' do
       get :index, nil, {fingerprint: '123456'}
       expect(response).to be_success
@@ -12,16 +13,6 @@ describe GamesController, type: :controller do
     it 'renders the index template' do
       get :index, nil, {fingerprint: '123456'}
       expect(response).to render_template('index')
-    end
-
-    it 'loads the first 50 games into @games' do
-      games_array = []
-      51.times do
-        games_array << Game.create(status: 'Approved')
-      end
-      get :index, nil, {fingerprint: '123456'}
-
-      expect(assigns(:games).count).to be <= 25
     end
 
     it 'should only display approved games' do
@@ -36,7 +27,19 @@ describe GamesController, type: :controller do
         Game.create(name: Faker::Name.name, status: 'Rejected')
       end
       get :index, nil, {fingerprint: '123456'}
+
       expect(assigns(:games).count).to eq(Game.where(status: 'Approved').count)
+
+    end
+
+    it 'loads the first 50 games into @games' do
+      games_array = []
+      51.times do
+        games_array << Game.create(status: 'Approved')
+      end
+      get :index, nil, {fingerprint: '123456'}
+
+      expect(assigns(:games).count).to be <= 25
     end
   end
 
@@ -144,6 +147,7 @@ describe GamesController, type: :controller do
       @game = FactoryGirl.create(:game)
       @theme = FactoryGirl.create(:theme)
     end
+
     subject { patch :update, {id: @game.id, game: {theme_id: @theme.id}}, {fingerprint: '123456'} }
     context 'when admin logged in' do
       before(:all) do

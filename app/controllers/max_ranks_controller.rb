@@ -2,6 +2,8 @@ class MaxRanksController < ApplicationController
   before_action :validate_recaptcha, only: :create
   before_action :set_max_rank, only: [:verify, :unverify]
   before_action :authenticate_admin_user!, only: [:verify, :unverify]
+  after_action :clear_user_votes, only: :create
+
   def create
     params[:max_rank][:user_id] = current_user ? current_user.id : nil
     @max_rank = MaxRank.new(max_rank_params)
@@ -41,5 +43,10 @@ class MaxRanksController < ApplicationController
 
   def set_max_rank
     @max_rank = MaxRank.find_by_id(params[:id])
+  end
+
+
+  def clear_user_votes
+    Rails.cache.delete("votes/#{current_user.id}-#{@max_rank.game.id}") if @max_rank && @max_rank.game && current_user
   end
 end

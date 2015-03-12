@@ -1,23 +1,26 @@
 class VotesController < ApplicationController
+
+  after_action :clear_user_votes, only: :create
+
   def create
     params[:vote][:user_id] = current_user ? current_user.id : nil
-    vote = Vote.new(vote_params)
+    @vote = Vote.new(vote_params)
 
-    existing_vote = Vote.where(user_id: vote.user_id, max_rank_id: vote.max_rank_id).first
+    existing_vote = Vote.where(user_id: @vote.user_id, max_rank_id: @vote.max_rank_id).first
     if existing_vote
-      if vote.vote == existing_vote.vote
+      if @vote.vote == existing_vote.vote
         existing_vote.destroy
         json = {}
         status = 204
       else
-        existing_vote.vote = vote.vote
+        existing_vote.vote = @vote.vote
         existing_vote.save
         json = existing_vote.to_json
         status = 200
       end
     else
-      if vote.save
-        json = vote.to_json
+      if @vote.save
+        json = @vote.to_json
         status = 201
       else
         json = {}
@@ -36,5 +39,10 @@ class VotesController < ApplicationController
   def vote_params
     params.require(:vote).permit(:vote, :max_rank_id, :user_id)
   end
+
+  def clear_user_votes
+    Rails.cache.delete("votes/#{current_user.id}-#{@vote.max_rank.game.id}") if @vote.max_rank && current_user
+  end
+
 
 end
