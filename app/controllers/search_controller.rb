@@ -12,7 +12,7 @@ class SearchController < ApplicationController
           @total_results = @google_request['items'].present? ? @google_request['items'].size : 0
           render 'search'
         rescue
-          redirect_to "https://www.google.com/?#q=site:lvlcap.kyledornblaser.com+#{params[:query]}"
+          redirect_to "https://www.google.com/?#q=site:grindbucket.com+#{params[:query]}"
         end
       end
     else
