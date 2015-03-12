@@ -3,16 +3,18 @@ $(function() {
   /********************************
    Jquery Swipe
    ********************************/
+    if ($(document).width() <= 768) {
+        $('body').on('swipeleft', function (e) {
 
-  $('body').on('swipeleft', function(e) {
-    $('.left-panel').removeClass('collapsed');
-  }).on('swiperight', function(e) {
-    $('.left-panel').addClass('collapsed');
-  }).on('movestart', function(e) {
-    if ((e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY)) {
-      e.preventDefault();
+            $('.left-panel').removeClass('collapsed');
+        }).on('swiperight', function (e) {
+            $('.left-panel').addClass('collapsed');
+        }).on('movestart', function (e) {
+            if ((e.distX > e.distY && e.distX < -e.distY) || (e.distX < e.distY && e.distX > -e.distY)) {
+                e.preventDefault();
+            }
+        });
     }
-  });
   /********************************
    Toggle Aside Menu
    ********************************/
