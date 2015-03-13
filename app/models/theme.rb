@@ -24,4 +24,8 @@ $nav-link-hover-color: #{nav_link_hover_color};
     end
   end
 
+  def to_s
+    name
+  end
+
 end
