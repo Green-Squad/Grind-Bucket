@@ -68,7 +68,7 @@ class Game < ActiveRecord::Base
   private
 
   def set_theme
-    self.theme_id = Theme.where(name: 'default').first.id unless theme_id
+    self.theme_id = Theme.order('RANDOM()').first.id unless theme_id
   end
   
   def fix_slug
