@@ -365,3 +365,7 @@ $search-box-placeholder-color: #c4c4cd;
 .warper {
   min-height: calc(100vh - 260px) !important;
 }
+
+.ui-autocomplete-loading {
+  background-position-x: 95% !important;
+}
