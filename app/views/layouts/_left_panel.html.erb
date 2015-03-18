@@ -18,6 +18,13 @@
       <li>
         <a href="<%= games_index_path %>"><i class="fa fa-gamepad"></i><span class="nav-label">Games</span></a>
       </li>
+      <% if defined?(Devise) %>
+      <% if admin_user_signed_in? %>
+      <li>
+        <a href="<%= admin_dashboard_path %>"><i class="fa fa-gear"></i><span class="nav-label">Admin</span></a>
+      </li>
+      <% end %>
+      <% end %>
     </ul>
   </nav>
 

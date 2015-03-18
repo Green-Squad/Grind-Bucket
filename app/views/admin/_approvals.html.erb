@@ -1,5 +1,5 @@
 <%
-pending_games = Game.where(status: "Pending").order(:created_at).page params[:page]
+pending_games = Game.where(status: "Pending").order(created_at: :desc).page params[:page]
 %>
 
 <h1>Games</h1>
