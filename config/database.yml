@@ -84,4 +84,3 @@ test:
 production:
   <<: *default
   database: level_cap_production
-  username: level_cap
