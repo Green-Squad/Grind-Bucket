@@ -22,19 +22,36 @@
     <%= render partial: 'layouts/left_panel' %>
     <section class="content">
       <%= render partial: 'layouts/header' %>
-      <div class="game-header <%= yield(:game_image).empty? ? 'default-image' : 'game-image' %>" 
-        <% if yield(:game_image).present? %>
-        style="background-image: url('<%= yield(:game_image) %>')"
-        <% end %>
-        >
-        <h1><span><%= yield(:header) %> <small><%= yield(:small_header) %></small></span></h1> 
+      <div class="game-header <%= yield(:game_image).empty? ? 'default-image' : 'game-image' %>"
+      <% if yield(:game_image).present? %>
+      style="background-image: url('<%= yield(:game_image) %>')"
+      <% end %>
+      >
+        <h1><span><%= yield(:header) %> <small><%= yield(:small_header) %></small></span></h1>
       </div>
       <div class="warper container-fluid">
-         <%= render partial: 'layouts/flash' %>
+        <%= render partial: 'layouts/flash' %>
         <%= yield %>
       </div>
       <%= render partial: 'layouts/footer' %>
     </section>
-
+    <% if Rails.env.production? && !admin_user_signed_in? %>
+    <script>
+      (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] ||
+        function() {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+      ga('create', 'UA-50909901-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <% end %>
   </body>
 </html>
