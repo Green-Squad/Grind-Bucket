@@ -1,4 +1,7 @@
 class Theme < ActiveRecord::Base
+  
+  after_commit :generate
+  
   def generate
     directory = Rails.root.join('app', 'assets', 'stylesheets', 'required', 'themes')
     File.open(directory.join("#{name}.scss"), 'w') do |f|
