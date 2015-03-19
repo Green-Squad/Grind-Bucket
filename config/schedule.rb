@@ -20,5 +20,5 @@
 # Learn more: http://github.com/javan/whenever
 
 every :day do
-  runner "Game.import", :environment => 'development' 
+  runner "Game.import", :environment => 'production' 
 end
