@@ -3,11 +3,11 @@
   <% color = current_user ? current_user.color : '#000' %>
   <div class="user text-center no-overflow">
     <div class="img circle-border">
-      <div style="background: <%= color %>; border: 2px solid <%= color %>" class="circle-border no-overflow">
+      <div style="background: <%= color %>; border: 2px solid <%= color %>" class="circle-border no-overflow" id="user-color-icon">
         <%= image_tag 'user.png', style: 'width: 48px' %>
       </div>
     </div>
-    <h4 class="user-name"><%= current_user.username if current_user %></h4>
+    <h4 class="user-name" data-user="<%= !!current_user %>"><%= current_user.username if current_user %></h4>
   </div>
 
   <nav class="navigation">

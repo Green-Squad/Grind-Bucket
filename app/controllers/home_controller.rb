@@ -11,8 +11,4 @@ class HomeController < ApplicationController
           .order('MAX(votes.created_at) DESC').select('games.*, MAX(votes.created_at)').take(5)
     end
   end
-
-  def loading
-
-  end
 end

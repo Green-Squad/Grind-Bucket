@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get     'search',                   to: 'search#search',              as: 'search'
   get     'search-items',             to: 'search#autocomplete',        as: 'search_autocomplete'
 
-  get     'loading',                  to: 'home#loading',               as: 'loading'
+  get     'user',                     to: 'fingerprint#lookupUser',     as: 'loading'
 
   get     'games',                    to: 'games#index',                as: 'games_index'
   get     ':id',                      to: 'games#show',                 as: 'game'
@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   get     'max_ranks/verify/:id',     to: 'max_ranks#verify',           as: 'verify_max_rank'
   get     'max_ranks/unverify/:id',   to: 'max_ranks#unverify',         as: 'unverify_max_rank'
 
-  post    'fingerprint/new',          to: 'fingerprint#create',         as: 'new_fingerprint'
 
   post    'votes/new',                to: 'votes#create',               as: 'new_vote'
 

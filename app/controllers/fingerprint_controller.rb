@@ -1,19 +1,29 @@
 class FingerprintController < ApplicationController
   skip_before_action :validate_user
   skip_before_action :verify_authenticity_token
-  def create
+
+  def lookupUser
     if params[:fingerprint] && params[:fingerprint].present?
       fingerprint = params[:fingerprint]
       session[:fingerprint] = fingerprint
-      json = { fingerprint: fingerprint }
+      ip_address = request.remote_ip
+      identifier = Identifier.where(ip_address: ip_address, fingerprint: fingerprint).order(created_at: :desc).first
+      if identifier
+        user = User.find(identifier.user_id)
+      else
+        user = User.create!
+        Identifier.create(ip_address: ip_address, fingerprint: fingerprint, user_id: user.id)
+      end
+      json = user.to_json
       status = 200
+      login_and_remember(user)
     else
       json = {}
       status = 422
     end
 
     respond_to do |format|
-      format.json { render json:  json, status: status}
+      format.json { render json: json, status: status }
     end
   end
 

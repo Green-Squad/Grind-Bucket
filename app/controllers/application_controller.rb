@@ -6,45 +6,40 @@ class ApplicationController < ActionController::Base
   before_action :validate_user
 
   private
-  
+
   def validate_user
-    unless params[:cookies] && params[:cookies] == 'false'
-      ip_address = request.remote_ip
-      fingerprint = session[:fingerprint]
-      if fingerprint
-        # Most recent identifier record that matches given IP Address and Fingerprint
-        identifier = Identifier.where(ip_address: ip_address, fingerprint: fingerprint).order(created_at: :desc).first
-        if identifier
-          user = User.find(identifier.user_id)
-          unless user == current_user
-            login_and_remember(user)
-          end
-        elsif current_user
-          Identifier.where(ip_address: ip_address, fingerprint: fingerprint, user_id: current_user.id).first_or_create
-        else
-          user = User.create!
-          Identifier.create(ip_address: ip_address, fingerprint: fingerprint, user_id: user.id)
+    ip_address = request.remote_ip
+    fingerprint = session[:fingerprint]
+    if fingerprint
+      # Most recent identifier record that matches given IP Address and Fingerprint
+      identifier = Identifier.where(ip_address: ip_address, fingerprint: fingerprint).order(created_at: :desc).first
+      if identifier
+        user = User.find(identifier.user_id)
+        unless user == current_user
           login_and_remember(user)
         end
+      elsif current_user
+        Identifier.where(ip_address: ip_address, fingerprint: fingerprint, user_id: current_user.id).first_or_create
       else
-        session[:intended_url] = request.original_url
-        redirect_to loading_url  
+        user = User.create!
+        Identifier.create(ip_address: ip_address, fingerprint: fingerprint, user_id: user.id)
+        login_and_remember(user)
       end
     end
   end
-  
+
   def login_and_remember(user)
     sign_in(user)
     user.remember_me!
-    
+
     user_cookie = User.serialize_into_cookie(user)
-    cookies.signed[:remember_user_token] = { 
-      value: user_cookie, 
-      expires: 2.weeks.from_now,
-      httponly: true
+    cookies.signed[:remember_user_token] = {
+        value: user_cookie,
+        expires: 2.weeks.from_now,
+        httponly: true
     }
   end
-  
+
   #-> Prelang (user_login:devise)
   def require_user_signed_in
     unless user_signed_in?
@@ -62,7 +57,7 @@ class ApplicationController < ActionController::Base
       redirect_to fallback_redirect, flash: {error: "You must be signed in to view this page."}
     end
   end
-  
+
   def validate_recaptcha
     url = 'https://www.google.com/recaptcha/api/siteverify'
     response = params['g-recaptcha-response']
@@ -73,12 +68,12 @@ class ApplicationController < ActionController::Base
       redirect_back
     end
   end
-  
+
   def redirect_back
     if request.env["HTTP_REFERER"]
       redirect_to :back
-    else 
-      redirect_to root_url 
+    else
+      redirect_to root_url
     end
   end
 

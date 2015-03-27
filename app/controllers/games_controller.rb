@@ -25,7 +25,7 @@ class GamesController < ApplicationController
       MaxRank.sort(unverified_max_ranks_array)
     end
 
-    @verified_max_ranks_array = Rails.cache.fetch( "max_ranks/verified/#{@game.id}-#{@game.name}", expires_in: 1.day) do
+    @verified_max_ranks_array = Rails.cache.fetch("max_ranks/verified/#{@game.id}-#{@game.name}", expires_in: 1.day) do
       verified_max_ranks = MaxRank.where(game_id: @game.id, verified: true)
       verified_max_ranks_array = verified_max_ranks.map do |max_rank|
         rank_info = {
@@ -36,14 +36,17 @@ class GamesController < ApplicationController
       end
       MaxRank.sort(verified_max_ranks_array)
     end
-
-    @votes_hash = Rails.cache.fetch("votes/#{current_user.id}-#{@game.id}", expires_in: 1.day) do
-      votes =Vote.joins(:max_rank).where('votes.user_id = ? AND max_ranks.game_id = ?', current_user.id, @game.id)
-      votes_hash = {}
-      votes.each do |vote|
-        votes_hash[vote.max_rank_id] = vote.vote
+    if current_user
+      @votes_hash = Rails.cache.fetch("votes/#{current_user.id}-#{@game.id}", expires_in: 1.day) do
+        votes =Vote.joins(:max_rank).where('votes.user_id = ? AND max_ranks.game_id = ?', current_user.id, @game.id)
+        votes_hash = {}
+        votes.each do |vote|
+          votes_hash[vote.max_rank_id] = vote.vote
+        end
+        votes_hash
       end
-      votes_hash
+    else
+      @votes_hash = {}
     end
   end
 
