@@ -38,7 +38,7 @@ describe VotesController, type: :controller do
     context 'unsucessful creation' do
       it 'with no user' do
         User.delete_all
-        expect{post :create, { vote: { vote: '-1', max_rank_id: FactoryGirl.create(:max_rank).id}, cookies: 'false', format: :json }, { fingerprint: '123456' }}.to_not change{Vote.count}
+        expect{post :create, { vote: { vote: '-1', max_rank_id: FactoryGirl.create(:max_rank).id}, format: :json }}.to_not change{Vote.count}
       end
 
       it 'with invalid vote' do

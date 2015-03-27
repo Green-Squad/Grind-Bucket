@@ -27,4 +27,28 @@ class FingerprintController < ApplicationController
     end
   end
 
+  def update
+    if params[:fingerprint] && params[:fingerprint].present?
+      fingerprint = params[:fingerprint]
+      session[:fingerprint] = fingerprint
+      ip_address = request.remote_ip
+      if current_user
+        identifier = Identifier.where(ip_address: ip_address, fingerprint: fingerprint, user_id: current_user.id).first_or_create
+        json = identifier.to_json
+        status = 201
+        cookies[:new_session] = false
+      else
+        json = {}
+        status = 422
+      end
+    else
+      json = {}
+      status = 422
+    end
+
+    respond_to do |format|
+      format.json { render json: json, status: status }
+    end
+  end
+
 end

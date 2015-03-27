@@ -7,31 +7,37 @@ class ApplicationController < ActionController::Base
 
   private
 
+
   def validate_user
+
     ip_address = request.remote_ip
     fingerprint = session[:fingerprint]
-    if fingerprint
-      # Most recent identifier record that matches given IP Address and Fingerprint
+
+    if session[:logged_in] && current_user
+      # already logged in
+    elsif user = current_user
+      # only performed once per session
+      # finds user by cookie
+      login_and_remember(user)
+      cookies[:new_session] = true
+    elsif fingerprint
       identifier = Identifier.where(ip_address: ip_address, fingerprint: fingerprint).order(created_at: :desc).first
       if identifier
         user = User.find(identifier.user_id)
-        unless user == current_user
-          login_and_remember(user)
-        end
-      elsif current_user
-        Identifier.where(ip_address: ip_address, fingerprint: fingerprint, user_id: current_user.id).first_or_create
       else
         user = User.create!
         Identifier.create(ip_address: ip_address, fingerprint: fingerprint, user_id: user.id)
-        login_and_remember(user)
       end
+      login_and_remember(user)
+    else
+      # frontend will perform ajax call with fingerprint to find or create user
     end
   end
 
   def login_and_remember(user)
     sign_in(user)
     user.remember_me!
-
+    session[:logged_in] = true
     user_cookie = User.serialize_into_cookie(user)
     cookies.signed[:remember_user_token] = {
         value: user_cookie,
