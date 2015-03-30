@@ -22,3 +22,7 @@
 every :day do
   runner "Game.import", :environment => 'production' 
 end
+
+every :day do
+  rake "-s sitemap:refresh", :environment => 'production' 
+end
